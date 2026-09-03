@@ -1,10 +1,11 @@
 import { initTheme } from './theme.js';
-import { mountLayout, fadeInPage } from './ui.js';
+import { mountLayout, fadeInPage, initNavMenu } from './ui.js';
 
 const initApp = () => {
   const page = document.body.dataset.page || 'index';
   initTheme();
   mountLayout(page);
+  initNavMenu();
   fadeInPage();
 };
 
