@@ -72,68 +72,19 @@ a:hover { color: var(--color-primary-light); }
 
 .main-nav {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.25rem;
+  padding: 0.85rem 2rem;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 2px 12px var(--color-shadow);
   min-height: var(--nav-height);
-  gap: 0.5rem;
 }
-
-.nav-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-bg);
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.nav-toggle-icon {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--color-text);
-  position: relative;
-  transition: background var(--transition);
-}
-
-.nav-toggle-icon::before,
-.nav-toggle-icon::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  width: 18px;
-  height: 2px;
-  background: var(--color-text);
-  transition: transform var(--transition);
-}
-
-.nav-toggle-icon::before { top: -6px; }
-.nav-toggle-icon::after { top: 6px; }
-
-.nav-toggle[aria-expanded="true"] .nav-toggle-icon { background: transparent; }
-.nav-toggle[aria-expanded="true"] .nav-toggle-icon::before { transform: translateY(6px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] .nav-toggle-icon::after { transform: translateY(-6px) rotate(-45deg); }
 
 .nav-actions {
-  display: none;
-  width: 100%;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.75rem;
-  padding-top: 0.5rem;
-}
-
-.nav-actions.is-open {
   display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .nav-brand {
@@ -144,16 +95,12 @@ a:hover { color: var(--color-primary-light); }
 }
 
 .nav-links {
+  display: flex;
+  gap: 1.5rem;
   list-style: none;
-  flex-direction: column;
-  gap: 0.25rem;
-  width: 100%;
 }
 
 .nav-links a {
-  display: block;
-  padding: 0.65rem 0.5rem;
-  min-height: 44px;
   color: var(--color-text-muted);
   font-size: 0.9rem;
   font-weight: 500;
@@ -166,49 +113,9 @@ a:hover { color: var(--color-primary-light); }
 }
 
 .nav-cta {
-  width: 100%;
-  justify-content: center;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1.15rem;
   font-size: 0.85rem;
-  white-space: normal;
-  text-align: center;
-}
-
-@media (min-width: 769px) {
-  .main-nav {
-    flex-wrap: nowrap;
-    padding: 0.85rem 2rem;
-    gap: 1rem;
-  }
-
-  .nav-toggle { display: none; }
-
-  .nav-actions {
-    display: flex;
-    width: auto;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
-    padding-top: 0;
-    margin-left: auto;
-  }
-
-  .nav-links {
-    flex-direction: row;
-    gap: 1.5rem;
-    width: auto;
-  }
-
-  .nav-links a {
-    display: inline;
-    padding: 0;
-    min-height: auto;
-  }
-
-  .nav-cta {
-    width: auto;
-    white-space: nowrap;
-  }
+  white-space: nowrap;
 }
 
 /* Theme Toggle */
@@ -250,7 +157,6 @@ a:hover { color: var(--color-primary-light); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
   padding: 0.85rem 1.75rem;
   border-radius: var(--radius);
   font-family: var(--font-main);
@@ -324,24 +230,16 @@ a:hover { color: var(--color-primary-light); }
   box-shadow: var(--shadow-hover);
 }
 
-/* Hero — mobile first */
+/* Hero */
 .hero {
   background: var(--gradient-hero);
-  padding: 1.75rem 1.25rem 2rem;
+  padding: 2.5rem 2rem 3rem;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.hero-visual { order: -1; }
-
-.hero-visual img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
 }
 
 .hero-content h1 {
@@ -389,16 +287,10 @@ a:hover { color: var(--color-primary-light); }
   box-shadow: var(--shadow-3d);
 }
 
-@media (min-width: 769px) {
-  .hero {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    padding: 2.5rem 2rem 3rem;
-  }
-
-  .hero-visual { order: 0; }
-
-  .hero-visual img { height: 300px; }
+.hero-visual img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 
 /* Marquee */
@@ -439,15 +331,11 @@ a:hover { color: var(--color-primary-light); }
   100% { transform: translateX(-50%); }
 }
 
-/* Sections — mobile first */
+/* Sections */
 .section {
-  padding: 2.5rem 1.25rem;
+  padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media (min-width: 769px) {
-  .section { padding: 4rem 2rem; }
 }
 
 .section-header {
@@ -556,19 +444,12 @@ a:hover { color: var(--color-primary-light); }
   color: var(--color-text-muted);
 }
 
-/* Value section — mobile first */
+/* Value section */
 .value-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   align-items: center;
-}
-
-@media (min-width: 769px) {
-  .value-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
 }
 
 .value-list {
@@ -679,63 +560,30 @@ a:hover { color: var(--color-primary-light); }
 }
 
 body[data-page="triage"] .triage-workspace {
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.25rem;
 }
 
 body[data-page="triage"] .triage-nav {
   position: sticky;
   top: calc(var(--nav-height) + 0.75rem);
   z-index: 50;
-  flex-direction: row;
-  justify-content: space-between;
-  align-self: stretch;
-  min-width: 0;
-  width: 100%;
-  grid-column: 1;
+  flex-direction: column;
+  align-self: start;
+  min-width: 148px;
+  grid-column: 2;
   grid-row: 1;
-  padding-bottom: 0.5rem;
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
 }
 
 body[data-page="triage"] .triage-nav .btn {
-  flex: 1;
-  width: auto;
+  width: 100%;
+  justify-content: center;
 }
 
 body[data-page="triage"] #triage-question-area {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1;
   min-width: 0;
-}
-
-@media (min-width: 769px) {
-  body[data-page="triage"] .triage-workspace {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 1.25rem;
-  }
-
-  body[data-page="triage"] .triage-nav {
-    flex-direction: column;
-    align-self: start;
-    min-width: 148px;
-    width: auto;
-    grid-column: 2;
-    grid-row: 1;
-    padding-bottom: 0;
-    background: transparent;
-    border-bottom: none;
-  }
-
-  body[data-page="triage"] .triage-nav .btn {
-    flex: none;
-    width: 100%;
-  }
-
-  body[data-page="triage"] #triage-question-area {
-    grid-row: 1;
-  }
 }
 
 .triage-recap-card {
@@ -783,16 +631,9 @@ body[data-page="triage"] #triage-question-area {
 
 .hospitals-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
   margin-top: 2rem;
-}
-
-@media (min-width: 600px) {
-  .hospitals-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
 }
 
 .hospital-card {
@@ -1105,12 +946,37 @@ body[data-page="triage"] #triage-question-area {
   opacity: 0.7;
 }
 
-@media (min-width: 480px) {
-  .steps-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+/* Responsive */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; padding: 1.75rem 1.25rem 2rem; }
+  .hero-visual { order: -1; }
+  .hero-visual img { height: 220px; }
+  .value-grid { grid-template-columns: 1fr; }
+  .main-nav { padding: 0.75rem 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+  .nav-actions { gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links { gap: 0.75rem; }
+  .nav-cta { padding: 0.5rem 0.85rem; font-size: 0.78rem; }
+  body[data-page="triage"] .triage-workspace {
+    grid-template-columns: 1fr;
   }
-
-  .hospitals-preview {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  body[data-page="triage"] .triage-nav {
+    grid-column: 1;
+    grid-row: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 0;
+    width: 100%;
+    padding-bottom: 0.5rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
   }
+  body[data-page="triage"] .triage-nav .btn {
+    width: auto;
+    flex: 1;
+  }
+  body[data-page="triage"] #triage-question-area {
+    grid-row: 2;
+  }
+  .section { padding: 2.5rem 1.25rem; }
+  .hospitals-grid { grid-template-columns: 1fr; }
 }

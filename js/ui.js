@@ -75,21 +75,8 @@ export const createNav = (activePage) => {
 
   nav.appendChild(brand);
 
-  const menuToggle = document.createElement('button');
-  menuToggle.type = 'button';
-  menuToggle.className = 'nav-toggle';
-  menuToggle.id = 'nav-toggle-btn';
-  menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-controls', 'nav-menu');
-  const toggleIcon = document.createElement('span');
-  toggleIcon.className = 'nav-toggle-icon';
-  toggleIcon.setAttribute('aria-hidden', 'true');
-  menuToggle.appendChild(toggleIcon);
-
   const actions = document.createElement('div');
   actions.className = 'nav-actions';
-  actions.id = 'nav-menu';
 
   const cta = document.createElement('a');
   cta.href = './triage.html';
@@ -103,29 +90,8 @@ export const createNav = (activePage) => {
     actions.appendChild(cta);
   }
 
-  nav.appendChild(menuToggle);
   nav.appendChild(actions);
   return nav;
-};
-
-export const initNavMenu = () => {
-  const toggle = document.getElementById('nav-toggle-btn');
-  const menu = document.getElementById('nav-menu');
-  if (!toggle || !menu) return;
-
-  toggle.addEventListener('click', () => {
-    const isOpen = menu.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
-    toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
-  });
-
-  menu.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Ouvrir le menu');
-    });
-  });
 };
 
 export const createFooter = () => {
