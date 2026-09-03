@@ -40,6 +40,51 @@ export const createHoverTooltip = (triggerEl, text) => {
   return wrapper;
 };
 
+const NAV_MOBILE_BREAKPOINT = 768;
+
+const setNavMenuOpen = (nav, open) => {
+  const toggle = nav.querySelector('.nav-toggle');
+  const backdrop = nav.querySelector('.nav-backdrop');
+  if (!toggle || !backdrop) return;
+
+  nav.classList.toggle('main-nav--open', open);
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  backdrop.hidden = !open;
+  document.body.classList.toggle('nav-menu-open', open);
+};
+
+const bindMobileNav = (nav) => {
+  const toggle = nav.querySelector('.nav-toggle');
+  const backdrop = nav.querySelector('.nav-backdrop');
+  const panel = nav.querySelector('.nav-menu-panel');
+  if (!toggle || !backdrop || !panel) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.contains('main-nav--open');
+    setNavMenuOpen(nav, !isOpen);
+  });
+
+  backdrop.addEventListener('click', () => setNavMenuOpen(nav, false));
+
+  panel.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setNavMenuOpen(nav, false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && nav.classList.contains('main-nav--open')) {
+      setNavMenuOpen(nav, false);
+      toggle.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > NAV_MOBILE_BREAKPOINT && nav.classList.contains('main-nav--open')) {
+      setNavMenuOpen(nav, false);
+    }
+  });
+};
+
 export const createNav = (activePage) => {
   const nav = document.createElement('nav');
   nav.className = 'main-nav';
@@ -49,6 +94,25 @@ export const createNav = (activePage) => {
   brand.href = './index.html';
   brand.className = 'nav-brand';
   brand.textContent = 'MedLink Butembo';
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'nav-toggle';
+  toggle.id = 'nav-toggle-btn';
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', 'nav-menu-panel');
+  toggle.setAttribute('aria-label', 'Ouvrir le menu');
+
+  for (let i = 0; i < 3; i += 1) {
+    const bar = document.createElement('span');
+    bar.className = 'nav-toggle-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    toggle.appendChild(bar);
+  }
+
+  const panel = document.createElement('div');
+  panel.className = 'nav-menu-panel';
+  panel.id = 'nav-menu-panel';
 
   const links = document.createElement('ul');
   links.className = 'nav-links';
@@ -73,10 +137,9 @@ export const createNav = (activePage) => {
     links.appendChild(li);
   });
 
-  nav.appendChild(brand);
-
   const actions = document.createElement('div');
   actions.className = 'nav-actions';
+  actions.appendChild(links);
 
   const cta = document.createElement('a');
   cta.href = './triage.html';
@@ -84,13 +147,23 @@ export const createNav = (activePage) => {
   cta.id = 'nav-cta-primary';
   cta.textContent = 'Initier ma consultation discrète';
 
-  actions.appendChild(links);
-
   if (activePage !== 'triage') {
     actions.appendChild(cta);
   }
 
-  nav.appendChild(actions);
+  panel.appendChild(actions);
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  backdrop.id = 'nav-backdrop';
+  backdrop.hidden = true;
+
+  nav.appendChild(brand);
+  nav.appendChild(toggle);
+  nav.appendChild(panel);
+  nav.appendChild(backdrop);
+
+  bindMobileNav(nav);
   return nav;
 };
 
