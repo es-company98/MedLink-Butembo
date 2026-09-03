@@ -1,0 +1,56 @@
+---
+description: Sécurité front-end, sanitisation DOM, politiques CSP, propreté du code, gestion des erreurs et règles de déploiement pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Security, Quality & Deployment: MedLink Butembo
+
+## 1. Sécurité Front-End & Hygiène du Code (Zero Back-End)
+* **Interdiction Stricte du HTML Injecté Brut (`innerHTML`) :**
+  * Il est formellement interdit d'utiliser `element.innerHTML` pour insérer des données saisies par l'utilisateur (risques de failles XSS).
+  * Utiliser exclusivement `textContent`, `innerText`, ou la création explicite de nœuds DOM via `document.createElement()` et `appendChild()` pour restituer les données du triage.
+* **Chargement Sécurisé des Scripts JavaScript :**
+  * Tous les scripts doivent être chargés en bas de document HTML ou via l'attribut `defer` / `async` pour empêcher tout blocage du rendu DOM.
+  * Interdiction d'exécuter du JavaScript en ligne (`onclick="..."` ou `href="javascript:..."`). Tous les événements doivent être écoutés dynamiquement via `addEventListener()`.
+* **Sanitisation du Storage Local (`localStorage`) :**
+  * Nettoyage et validation systématique du JSON extrait du `localStorage` avec des blocs `try...catch` pour parer à toute corruption de données ou injection malveillante dans le navigateur.
+
+## 2. Métadonnées de Sécurité & En-têtes (`<head>`)
+* **Content Security Policy (CSP) en Balise Meta :**
+  * Chaque fichier HTML doit contenir une balise meta CSP restreignant l'exécution de scripts non autorisés :
+    `<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;">`
+* **Protection de la Confidentialité Patient :**
+  * Insertion de la directive `<meta name="referrer" content="no-referrer">` pour empêcher la fuite des URL internes ou des paramètres de triage lors des redirections externes.
+
+## 3. Qualité, Nettoyage & Gestion des Erreurs
+* **Propreté de Production :**
+  * Suppression totale du code mort, des `console.log()` de débogage, et des blocs de test commentés avant toute livraison.
+  * Les commentaires dans le code doivent être purement explicatifs, professionnels et rédigés en français ou en anglais technique épuré.
+* **Gestion des Pannes Réseau / Hors-Ligne :**
+  * Interception des échecs de chargement d'images distantes via un gestionnaire d'événement `onerror` réutilisable appliquant une couleur de secours (*fallback*) élégante pour éviter les espaces brisés.
+
+## 4. Déploiement Statique & Intégration Continue (GitHub Pages)
+* **Compatibilité Serveur Statique :**
+  * Utilisation de chemins d'accès relatifs stricts (`./css/style.css`, `./js/app.js`) pour garantir le bon fonctionnement sur n'importe quel sous-domaine ou sous-dossier d'hébergement statique (GitHub Pages, Vercel, Netlify).
+* **Configuration d'Acheminement (Routing Statique) :**
+  * Inexistence de réécriture d'URL côté serveur : la navigation doit reposer sur de vrais liens HTML pointant explicitement vers les fichiers physiques (`index.html`, `triage.html`, `hospitals.html`, `confirmation.html`, `consultation.html`, `apropos.html`).
+
+---
+
+## Comment réutiliser cette structure de 8 MDC sur tous tes projets futurs ?
+
+Pour industrialiser cette méthode et conserver une qualité "Silicon Valley" sur **n'importe quel projet** (E-commerce, SaaS, application Web, landing page), voici la démarche exacte :
+
+1. **Créer un dossier `.cursor/rules/` ou `.cursorrules` à la racine de chaque nouveau projet.**
+2. **Copier les 8 fichiers MDC standardisés :**
+   * `product-vision.mdc` (La cible, le problème, la promesse)
+   * `design-system.mdc` (Les couleurs, la typographie, l'identité visuelle)
+   * `architecture.mdc` (L'arborescence, les fichiers, la stack technique)
+   * `copywriting.mdc` (Les règles de conversion, le ton, l'interdiction des termes génériques)
+   * `seo-performance.mdc` (Le SEO/GEO, le balisage `<head>`, la légèreté mobile)
+   * `assets-animation.mdc` (Les illustrations 3D, les effets au survol, le smooth scroll)
+   * `business-logic.mdc` (Le parcours utilisateur, la gestion d'état, les formulaires)
+   * `security-deploy.mdc` (La sanitisation XSS, la propreté du code, le déploiement statique)
+3. **Ajuster uniquement les variables spécifiques du projet** (par exemple les codes couleurs dans `design-system.mdc` ou la promesse produit dans `product-vision.mdc`).
+
+Une fois ces 8 fichiers placés dans ton projet, Cursor ne va plus "deviner" ou "inventer" du code générique. Il va suivre ces 8 piliers rigoureux pour te sortir un projet propre, rapide, ultra-sécurisé et visuellement irréprochable.

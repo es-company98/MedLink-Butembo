@@ -1,0 +1,27 @@
+---
+description: Architecture technique, arborescence multi-pages, gestion des états front-end sans back-end, stratégie d'assets et règles de performance pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Architecture & Structure du Code: MedLink Butembo
+
+## 1. Arborescence des Fichiers & Navigation Multi-Pages
+* **Structure des Pages (HTML5 Pur + JS/CSS modulaires) :**
+  * `index.html` : Page d'accueil riche, intégrant le Hero de classe Silicon Valley, la bande de logos de réassurance (*infinite marquee*), les preuves sociales visuelles et les sections d'introduction.
+  * `triage.html` : Module interactif de diagnostic par flux de questions dynamiques (question par question, avec mise en mémoire locale des réponses).
+  * `hospitals.html` : Répertoire visuel et interactif des 3 structures sanitaires partenaires, avec adaptation subtile des teintes selon l'hôpital choisi.
+  * `consultation.html` : Espace de simulation de prise en charge et de qualification du dossier.
+  * `confirmation.html` : Écran final générant le numéro de dossier unique, affichant le bouton de paiement grisé/barré (*"Service entièrement gratuit et libre d'accès"*) et structurant le pont de transmission vers WhatsApp.
+  * `apropos.html` : Page institutionnelle regroupant la vision, les informations de contact et les engagements des 3 structures partenaires.
+
+## 2. Communication Inter-Pages & Gestion d'État (Sans Back-end)
+* **Persistance des Données (Client-Side State) :** Utilisation intensive du `localStorage` ou du `sessionStorage` en JavaScript vanilla. 
+* **Continuité du Parcours :** Chaque choix effectué par l'utilisateur (symptômes, réponses au triage, hôpital sélectionné) est stocké instantanément en mémoire locale pour être récupéré et injecté dynamiquement dans les formulaires finaux et le message de transmission, garantissant qu'aucune information n'est perdue d'un fichier à l'autre.
+
+## 3. Stratégie d'Assets Visuels & Résilience Hors-Ligne
+* **Génération et Chargement d'Images :** Cursor doit attribuer des URL d'illustrations et d'images de haute qualité depuis le web (via des liens externes stables) pour peupler immédiatement les composants visuels, garantissant une interface riche sans blocs de texte brut.
+* **Optimisation & Résilience Réseau :** Utilisation de Vanilla JavaScript et de CSS natif pour les animations fluides. Limitation stricte des bibliothèques externes lourdes pour éviter tout blocage ou bug en zone à faible connectivité, en privilégiant des scripts légers et des mécanismes de mise en cache locaux.
+
+## 4. Parcours de Triage Dynamique & Ergonomie
+* **Logique Séquentielle :** Le questionnaire de triage s'adapte en temps réel selon la niche ou le problème sélectionné. Les questions s'affichent de manière unitaire ou par étapes fluides (question après question) pour guider précisément le diagnostic sans saturer l'utilisateur.
+* **Transmission Structurée :** L'architecture front-end garantit que l'ensemble des données collectées au fil des pages se consolide proprement pour alimenter le bulletin numérique final destiné au réseau hospitalier.

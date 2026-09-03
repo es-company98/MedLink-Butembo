@@ -1,0 +1,44 @@
+---
+description: Logique métier front-end, parcours utilisateur séquentiel, persistance en LocalStorage, génération de dossier médical et pont WhatsApp sans back-end pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Business Logic & User Flow: MedLink Butembo
+
+## 1. Architecture 100% Front-End & Pont WhatsApp (Zero Back-End)
+* **Principe du Pseudo-Backend :** L'application ne possède aucune base de données ni serveur d'application. Le navigateur du patient agit comme un processeur de formulaire haut de gamme qui valide, formate et encapsule toutes les données saisies.
+* **Le Pont de Transmission :** L'action finale génère une redirection directe vers le WhatsApp officiel de l'hôpital sélectionné. Le script construit une URL `https://wa.me/...` pré-remplie avec un message structuré, lisible et professionnel. L'envoi reste déclenché par le patient en un clic.
+
+## 2. Parcours Utilisateur Séquentiel (Étape par Étape)
+1. **Étape 1 : Découverte (`index.html`)**
+   * L'utilisateur explore le réseau des 3 hôpitaux partenaires et consulte les informations de réassurance.
+   * Un clic sur *"Initier ma consultation discrète"* redirige vers `triage.html`.
+2. **Étape 2 : Triage Dynamique (`triage.html`)**
+   * Affichage séquentiel des questions (une seule question à la fois).
+   * L'utilisateur sélectionne la catégorie de santé (symptômes, degré d'urgence, motif principal).
+   * Les réponses sont enregistrées dynamiquement au fur et à mesure dans le `localStorage` sous la clé `medlink_triage_data`.
+3. **Étape 3 : Choix de la Structure Sanitaire (`hospitals.html`)**
+   * Présentation des 3 hôpitaux disponibles avec leur spécialité et leur temps d'attente estimé.
+   * La sélection fixe l'identifiant de l'hôpital (`hospital_id`) et son numéro WhatsApp cible dans le `localStorage`.
+4. **Étape 4 : Qualification & Simulation (`consultation.html`)**
+   * Récapitulatif du dossier avant transmission.
+   * Saisie facultative du prénom ou pseudonyme et de la tranche d'âge pour garantir l'anonymat.
+5. **Étape 5 : Confirmation & Bulletin Numérique (`confirmation.html`)**
+   * Génération automatique d'un numéro de dossier médical unique (format `#MLB-YYYYMMDD-XXXX`).
+   * Affichage d'un badge *"Phase Pilote — Accès 100% Gratuit"*.
+   * Génération et activation du bouton principal de transmission WhatsApp.
+
+## 3. Structure des Données Manipulées (Objet LocalStorage)
+Toutes les interactions mettent à jour un objet JSON central stocké côté client :
+
+```json
+{
+  "dossier_id": "MLB-20260903-8492",
+  "date": "2026-09-03T17:30:00Z",
+  "categorie": "Santé Intime / Spécialisée",
+  "symptomes": ["Infection suspectée", "Gêne depuis 48h"],
+  "urgence": "Modérée",
+  "hopital_choisi": "Structure Partner A",
+  "whatsapp_target": "243979692582",
+  "patient_pseudo": "Patient_A82"
+}

@@ -1,0 +1,35 @@
+---
+description: Optimisation SEO/GEO, métadonnées sémantiques `<head>`, performances mobiles ultra-légères, balisage structuré et règles d'illustration visuelle pour MedLink Butembo.
+globs: ["*"]
+---
+
+# SEO, GEO & Performance Web: MedLink Butembo
+
+## 1. Métadonnées Sémantiques & Architecture du `<head>`
+* **Chaque page du site (`index.html`, `triage.html`, `hospitals.html`, etc.) doit obligatoirement inclure un bloc `<head>` enrichi, complet et professionnel :**
+  * `charset` & `viewport` : Configuration UTF-8 et gestion responsive mobile-first strict.
+  * Meta-titre & Meta-description : Textes percutants, sans verbiage générique, orientés sur la discrétion, l'accès direct aux soins et la confiance médicale.
+  * Méta-mots-clés & Robots : Directives d'indexation claires (`index, follow`).
+  * Protocoles Open Graph (`og:title`, `og:description`, `og:image`, `og:type`, `og:url`) & Twitter Cards : Garantir un aperçu visuel élégant, pro et rassurant lors du partage d'un lien sur WhatsApp ou les réseaux sociaux.
+  * Balises Canoniques (`rel="canonical"`) : Éviter tout risque de contenu dupliqué entre les vues.
+
+## 2. Référencement Avancé : Hybrid SEO & GEO (Generative Engine Optimization)
+* **Stratégie GEO (Moteurs de recherche IA & Agents) :**
+  * Structurer le contenu de manière factuelle et directe pour être facilement cité et extrait par les moteurs IA (ChatGPT, Gemini, Perplexity).
+  * Intégrer des données structurées JSON-LD (`MedicalOrganization`, `MedicalClinic`, `FAQPage`) dans le `<head>` précisant le réseau des structures partenaires, les types de consultations et les garanties de confidentialité.
+* **Balisage Sémantique SEO Strict :**
+  * Hiérarchie HTML5 parfaite : Une seule balise `<h1>` descriptive par page, suivie de balises `<h2>` et `<h3>` structurées logiquement.
+
+## 3. Règle d'Or Visuelle : Prédominance des Images & Illustrations
+* **Rupture avec le Texte Brut :** Interdiction stricte d'aligner de longs paragraphes ou des blocs de texte denses. Chaque section d'information majeure doit être accompagnée ou portée par une illustration ou une image pertinente.
+* **Inclusion Automatique des Assets :** C'est au script/Cursor d'extraire, lier et intégrer directement des URL d'images de haute qualité (photos médicales humaines, illustrations 3D épurées, icônes en relief) adaptées au contexte.
+* **Optimisation des Images (Performance) :**
+  * Toutes les images doivent obligatoirement posséder l'attribut `loading="lazy"` pour préserver le temps de chargement initial.
+  * Balises `alt` descriptives et optimisées SEO/GEO sur 100% des visuels pour le référencement et l'accessibilité.
+
+## 4. Vitesse de Chargement & Performance Mobile Légère
+* **Zéro Décalage de Mise en Page (Zero CLS) :** Réservation explicite des dimensions (`width` et `height`) pour toutes les images et conteneurs afin d'éviter tout saut de page au chargement.
+* **Code Ultra-Léger pour Connexions Limitées :**
+  * Utilisation exclusive de CSS/JS vanilla léger ou de bibliothèques ultra-optimisées.
+  * Minimisation des requêtes réseau inutiles pour garantir une exécution instantanée sur smartphone même avec un réseau mobile instable ou à faible débit.
+* **Mise en Cache Locale :** Exploitation du cache navigateur et stockage local pour une navigation fluide et quasi-instantanée entre les fichiers `index.html`, `triage.html`, `hospitals.html`, `confirmation.html`, `consultation.html` et `apropos.html`.

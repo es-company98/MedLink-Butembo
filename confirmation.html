@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+  <meta name="referrer" content="no-referrer">
+  <title>Confirmation & Transmission — MedLink Butembo</title>
+  <meta name="description" content="Votre dossier médical est prêt. Transmettez-le directement à la garde hospitalière via WhatsApp.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="./confirmation.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body data-page="confirmation">
+  <div id="nav-slot"></div>
+
+  <main id="main-content">
+    <div class="confirmation-page" id="confirmation-page">
+      <span class="pilot-badge" id="pilot-badge">Phase Pilote — Accès 100% Gratuit</span>
+      <h1 id="confirmation-title">Votre dossier est prêt</h1>
+      <p id="confirmation-desc">Bulletin numérique généré. Transmettez-le en un clic à la garde de l'établissement choisi.</p>
+
+      <div class="dossier-badge" id="dossier-id-display" aria-live="polite">#MLB-00000000-0000</div>
+
+      <div class="confirmation-summary card-3d" id="confirmation-summary"></div>
+
+      <div class="confirmation-actions" id="confirmation-actions">
+        <button type="button" class="btn whatsapp-btn" id="whatsapp-transmit-btn">Transmettre mon dossier à l'hôpital</button>
+        <button type="button" class="btn btn-disabled" id="payment-disabled-btn" disabled aria-disabled="true" aria-label="Service payant non applicable — accès entièrement gratuit durant la phase pilote">
+          <span class="btn-strike">Service payant</span>
+          <span class="btn-free-label">Accès 100% gratuit — phase pilote ouverte à tous</span>
+        </button>
+      </div>
+
+      <p class="form-help" id="confirmation-help" style="margin-top: 1.5rem;">L'envoi se fait uniquement lorsque vous appuyez sur le bouton. Aucune transmission automatique.</p>
+    </div>
+  </main>
+
+  <div id="footer-slot"></div>
+
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Changer de thème">
+    <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+  </button>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/confirmation.js"></script>
+</body>
+</html>

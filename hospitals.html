@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+  <meta name="referrer" content="no-referrer">
+  <title>Structures Sanitaires — MedLink Butembo</title>
+  <meta name="description" content="Choisissez parmi les 3 hôpitaux partenaires de Butembo : CH La Colombe, HGR Katwa, Hôpital de Matanda.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="./hospitals.html">
+  <meta property="og:title" content="Réseau Hospitalier — MedLink Butembo">
+  <meta property="og:description" content="CH La Colombe, HGR Katwa, Hôpital de Matanda — orientation directe vers la structure adaptée.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Structures sanitaires partenaires MedLink Butembo",
+    "itemListElement": [
+      { "@type": "MedicalClinic", "name": "Centre Hospitalier La Colombe", "address": { "@type": "PostalAddress", "addressLocality": "Butembo", "addressRegion": "Nord-Kivu" } },
+      { "@type": "MedicalClinic", "name": "Hôpital Général de Référence de Katwa", "address": { "@type": "PostalAddress", "addressLocality": "Butembo", "addressRegion": "Nord-Kivu" } },
+      { "@type": "MedicalClinic", "name": "Hôpital de Référence Secondaire de Matanda", "address": { "@type": "PostalAddress", "addressLocality": "Butembo", "addressRegion": "Nord-Kivu" } }
+    ]
+  }
+  </script>
+</head>
+<body data-page="hospitals">
+  <div id="nav-slot"></div>
+
+  <main id="main-content">
+    <div class="hospitals-page" id="hospitals-page">
+      <div class="section-header">
+        <h1 id="hospitals-title">Choisissez votre structure sanitaire</h1>
+        <p id="hospitals-desc">Trois établissements partenaires à Butembo — sélectionnez celui le plus adapté à votre situation.</p>
+      </div>
+      <p class="social-proof" id="hospitals-proof">✓ Réseau hospitalier agréé — Transmission directe vers la garde de l'établissement choisi</p>
+      <div class="hospitals-grid" id="hospitals-grid"></div>
+    </div>
+  </main>
+
+  <div id="footer-slot"></div>
+
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Changer de thème">
+    <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+  </button>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/hospitals.js"></script>
+</body>
+</html>

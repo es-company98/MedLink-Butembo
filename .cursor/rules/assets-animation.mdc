@@ -1,0 +1,22 @@
+---
+description: Règles d'immersion visuelle, éléments 3D/Rétro, animations fluides, gestion des URL externes et interactions au survol pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Assets Visuels, 3D & Animations: MedLink Butembo
+
+## 1. Stratégie d'Assets Visuels (URL Externes Dynamiques)
+* **Aucun Dossier d'Assets Local Requis (Phase MVP) :** Pour cette phase de démonstration, Cursor ne doit pas s'appuyer sur des fichiers d'images locaux. Il doit intégrer directement des URL distantes stables, fiables et de haute définition (source Unsplash, Pexels ou CDN d'illustrations 3D).
+* **Richesse Visuelle Obligatoire :** Interdiction stricte de laisser des blocs de texte nus ou des interfaces plates. Chaque section majeure (Hero, étapes de consultation, présentation du réseau des 3 structures, témoignages) doit comporter un visuel (photo médicale réaliste, badge 3D, ou carte illustrée).
+
+## 2. Style Visuel : Rétro-Futurisme, 3D & Gradients
+* **Composants 3D & Relief :** Intégration d'éléments visuels donnant un effet de volume et de profondeur (icônes en relief 3D, conteneurs avec ombrages portés doux et superpositions).
+* **Dégradés "Gradins" (Gradients) :** Utilisation de dégradés subtils et profonds en arrière-plan des cartes et des headers pour structurer la hiérarchie visuelle sans alourdir le regard.
+* **Exclusion du Glassmorphism :** L'effet de verre transparent flouté est proscrit au profit d'un design rétro/3D texturé et d'apats couleur propres.
+
+## 3. Micro-Animations & Interactivité CSS (Zero JS Lourd)
+* **Animations au Survol (Hover Effects Avancés) :** 
+  * Les cartes et boutons doivent réagir au survol de la souris avec une légère lévitation 3D (`transform: translateY(-4px)` ou léger agrandissement `scale`).
+  * **Champs d'informations flottants :** Sur certains éléments clés (ex: logos d'hôpitaux, badges de sécurité), le survol doit ouvrir de petites fenêtres ou infobulles (*dives*) fournissant un complément d'information instantané.
+* **Transitions de Pages & Smooth Scroll :** Navigation fluide et ultra-rapide entre les vues (`index.html`, `triage.html`, `hospitals.html`, etc.) avec des effets d'apparition en douceur (*fade-in* léger).
+* **Performance & Zéro Lag :** Toutes les animations doivent être exécutées exclusivement via des propriétés CSS optimisées pour le GPU (`transform`, `opacity`) afin d'assurer une fluidité à 60 fps, même sur des smartphones mobiles à faibles performances.

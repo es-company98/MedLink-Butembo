@@ -1,0 +1,29 @@
+---
+description: Design System strict, règles UI/UX, palette de couleurs (vert forêt et blanc cassé), mode sombre/clair, style rétro/3D/gradients, interactions au survol et gestion de l'identité des structures partenaires pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Design System & UI/UX: MedLink Butembo
+
+## 1. Palette de Couleurs & Thèmes (Light / Dark Mode)
+* **Couleur Principale / Signature (Vert) :** Utilisation stricte d'un **vert forêt** élégant et institutionnel pour les éléments de santé, les badges de sécurité, et les boutons d'action principaux. Pas de vert agressif ni de sursaturation.
+* **Fonds de Page :** 
+  * Mode Clair : **Blanc cassé** haut de gamme (douillet, propre, évitant le blanc éblouissant de type hôpital stérile).
+  * Mode Sombre (Dark Mode) : Fond sombre profond et texturé pour faire ressortir les éléments visuels et les composants 3D.
+* **Variabilité Subtile par Structure Partenaire :** Les couleurs et teintes de l'interface peuvent s'adapter subtilement (accents de bordure ou teintes secondaires) selon l'hôpital partenaire sélectionné ou affiché, renforçant l'identité propre de chaque structure du réseau.
+
+## 2. Typographie & Typo-Sémantique
+* **Style Général :** Design moderne, épuré, axé sur la lisibilité maximale.
+* **Police Unique avec Variantes Sensibles :** Une police principale moderne et propre pour l'ensemble du texte, couplée à des attributions typographiques spécifiques (polices ou graisses distinctes) pour les mots clés, termes sensibles ou données médicales importantes afin qu'ils résonnent visuellement avec leur sens exact.
+
+## 3. Esthétique Visuelle : Style Rétro, 3D & Gradients (Pas de Glassmorphism)
+* **Pas de Liquid Glass :** Exclusion totale des effets de transparence floutée (*glassmorphism*). 
+* **Rétro, 3D & Gradients :** Privilégier un style visuel texturé avec des touches rétro, des illustrations en relief (3D épurée) et des dégradés subtils (*gradients*) pour donner de la profondeur aux cartes et aux sections sans alourdir le chargement.
+* **Richesse de la Page d'Accueil :** La page d'accueil est riche en informations structurées, se déployant verticalement avec des sections d'information détaillées (présentation des structures, réassurance, parcours).
+
+## 4. Comportement du Bouton Dark/Light Mode
+* **Positionnement :** Situé au coin inférieur droit de l'écran, en mode **flottant**.
+* **Comportement Dynamique :** Visible **uniquement lors du défilement (*scroll*)**. Si l'utilisateur s'arrête de scroller, le bouton s'efface automatiquement après 5 secondes pour éviter tout encombrement visuel pendant la lecture.
+
+## 5. Interactions au Survol (Hover Effects avancés)
+* **Informations Contextuelles :** Les survols de souris (*hover*) ne se limitent pas à un simple changement de couleur ou d'éclaircissement. Sur les éléments clés, le survol déclenche l'apparition de petites fenêtres ou blocs flottants (*dives*) pour fournir des informations complémentaires instantanées.

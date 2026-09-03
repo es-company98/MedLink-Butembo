@@ -1,0 +1,54 @@
+* **Extraction des Médias Réels & Confiance Locale :** Pour garantir une crédibilité maximale et rassurer immédiatement les utilisateurs locaux, le système doit effectuer une recherche ciblée sur le Web afin d'extraire les vraies photographies de ces trois structures (façades, blocs opératoires, équipements ou cérémonies d'inauguration). Les sources à privilégier sont les articles et reportages des médias/radios de Butembo et de la région (ex. *RTVH.net*, *Radio Moto*, *La Voix de l'UCG*, *ACP*). Ces images réelles doivent être nettoyées, optimisées en termes de ratio/résolution, puis intégrées directement dans les cartes de `hospitals.html` et la page `apropos.html` à la place de simples visuels génériques.
+
+
+---
+description: Fiche réseau officielle des 3 structures sanitaires partenaires (CH La Colombe, HGR Katwa, Hôpital de Matanda), spécialités, identifiants, visuels et numéros de transmission pour MedLink Butembo.
+globs: ["*"]
+---
+
+# Réseau des Structures Sanitaires Partenaires: MedLink Butembo
+
+## 1. Rôle du Fichier & Intégration Visuelle
+* **Objectif :** Alimenter dynamiquement les cartes de choix dans `hospitals.html`, les blocs de réassurance du triage et la page `apropos.html` avec des données réelles, précises et localisées sur Butembo.
+* **Standard Visuel :** Présentation sous forme de cartes 3D interactives enrichies d'illustrations représentatives (bloc opératoire, maternité, cardiologie/laboratoire), de badges d'accréditation spécifiques et d'indicateurs de disponibilité.
+
+## 2. Fiches Détaillées des 3 Structures Partenaires
+
+### Structure A : Centre Hospitalier (CH) La Colombe
+* **Identifiant Technique (`hospital_id`) :** `ch-lacolombe`
+* **Nom Officiel :** Centre Hospitalier La Colombe
+* **Localisation :** Cellule Kaghondo, Quartier Rughenda, Commune de Bulengera, Butembo.
+* **Spécialités & Plateau Technique :**
+  * Équipements de pointe : Électrocardiogramme (enregistrement de l'activité électrique du cœur), dentisterie moderne, moniteurs de surveillance, mobiliseur et laboratoire d'analyses équipé.
+  * Orientations phares : Consultations spécialisées, examens cardiologiques et dentaires, diagnostic biologique rapide, prise en charge discrète.
+* **Numéro WhatsApp Dédié :** `243000000001` *(À mettre à jour avec la ligne de garde du CH)*
+* **Badge de Réassurance :** *"Pôle Diagnostic & Équipements Spécialisés — Kaghondo"*
+* **Éléments Visuels :** Image dynamique haute définition d'un bureau de consultation cardiologique/dentaire moderne + icône 3D de localisation Bulengera.
+
+### Structure B : Hôpital Général de Référence (HGR) de Katwa
+* **Identifiant Technique (`hospital_id`) :** `hgr-katwa`
+* **Nom Officiel :** Hôpital Général de Référence de Katwa
+* **Localisation :** Quartier Bwinongo, Commune Mususa (sud-est du centre-ville, axe Marché de Katwa), Butembo.
+* **Spécialités & Plateau Technique :**
+  * Grande Maternité de Référence : Modernisée avec l'appui de l'UNFPA (~100 accouchements/mois).
+  * Urgences & Réponse Sanitaire : Prise en charge 24h/24 et 7j/7, site avancé de prélèvement sanguin pour urgences transfusionnelles, centre de traitement spécialisé.
+* **Numéro WhatsApp Dédié :** `243000000002` *(À mettre à jour avec la ligne de garde HGR Katwa)*
+* **Badge de Réassurance :** *"Institution Publique Historique — Maternité & Urgences 24/7"*
+* **Éléments Visuels :** Image dynamique illustrant une maternité rééquipée et un pôle de soins continus + icône 3D Mususa.
+
+### Structure C : Hôpital de Référence Secondaire de Matanda
+* **Identifiant Technique (`hospital_id`) :** `hopital-matanda`
+* **Nom Officiel :** Hôpital de Référence Secondaire de Matanda
+* **Localisation :** Cellule Ndonga, Quartier Matanda, Commune Mususa (sur la colline, axe Butembo-Goma), Zone de Santé de Katwa, Butembo.
+* **Spécialités & Plateau Technique :**
+  * Bloc Opératoire Ultra-Moderne : Équipements chirurgicaux haute précision pour interventions complexes.
+  * Pôle de Neurochirurgie : Prise en charge spécialisée du système nerveux (unique dans le réseau local).
+  * Réserve Sang & Capacité d'Accueil : Site de prélèvement sanguin avancé et pavillons à forte capacité d'urgence.
+* **Numéro WhatsApp Dédié :** `243000000003` *(À mettre à jour avec la ligne de garde Matanda)*
+* **Badge de Réassurance :** *"Bloc Chirurgical de Pointe & Neurochirurgie — Axe Matanda"*
+* **Éléments Visuels :** Image dynamique d'un bloc opératoire technologique et d'un centre hospitalier panoramique.
+
+## 3. Logique d'Infiltration dans le Code Front-End
+* **Rendu Dynamique (`hospitals.html`) :** Les 3 cartes se génèrent automatiquement en lisant ce registre JSON, affichant les quartiers (Bulengera / Mususa), les spécialités et le bouton d'orientation direct.
+* **Mise en Mémoire (`localStorage`) :** La sélection d'un hôpital enregistre l'objet complet (`hospital_id`, `nom`, `quartier`, `whatsapp_target`) dans `medlink_triage_data`.
+* **Génération du Bulletin (`confirmation.html`) :** Le message WhatsApp final inclut explicitement le nom de l'hôpital et son quartier d'implantation à Butembo pour orienter immédiatement la garde hospitalière.
