@@ -1,4 +1,4 @@
-import { getMedlinkData, saveMedlinkData } from './storage.js';
+import { getMedlinkData, saveMedlinkData, isTriageComplete } from './storage.js';
 
 const recapEl = () => document.getElementById('consultation-recap');
 const form = () => document.getElementById('consultation-form');
@@ -51,6 +51,10 @@ const initConsultation = () => {
   const data = getMedlinkData();
   if (!data.hospital_id) {
     window.location.href = './hospitals.html';
+    return;
+  }
+  if (!isTriageComplete(data)) {
+    window.location.href = './triage.html';
     return;
   }
 

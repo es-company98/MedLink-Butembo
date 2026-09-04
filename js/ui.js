@@ -92,6 +92,23 @@ const bindMobileNav = (nav) => {
   });
 };
 
+export const createMobileCtaBar = (activePage) => {
+  if (activePage === 'triage') return null;
+
+  const bar = document.createElement('div');
+  bar.className = 'mobile-cta-bar';
+  bar.id = 'mobile-cta-bar';
+
+  const cta = document.createElement('a');
+  cta.href = './triage.html';
+  cta.className = 'btn btn-primary mobile-cta-bar-btn';
+  cta.id = 'mobile-cta-primary';
+  cta.textContent = 'Consultation discrète';
+
+  bar.appendChild(cta);
+  return bar;
+};
+
 export const createNav = (activePage) => {
   const nav = document.createElement('nav');
   nav.className = 'main-nav';
@@ -150,7 +167,7 @@ export const createNav = (activePage) => {
 
   const cta = document.createElement('a');
   cta.href = './triage.html';
-  cta.className = 'btn btn-primary nav-cta';
+  cta.className = 'btn btn-primary nav-cta nav-cta--desktop';
   cta.id = 'nav-cta-primary';
   cta.textContent = 'Initier ma consultation discrète';
 
@@ -265,6 +282,8 @@ export const mountLayout = (activePage) => {
   if (navSlot) {
     const fragment = document.createDocumentFragment();
     fragment.appendChild(createNav(activePage));
+    const mobileCta = createMobileCtaBar(activePage);
+    if (mobileCta) fragment.appendChild(mobileCta);
     const stepIndicator = createStepIndicator(activePage);
     if (stepIndicator) fragment.appendChild(stepIndicator);
     navSlot.replaceChildren(fragment);

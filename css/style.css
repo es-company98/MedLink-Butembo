@@ -21,6 +21,8 @@
   --shadow-3d: 0 8px 24px var(--color-shadow), 0 2px 6px rgba(0, 0, 0, 0.06);
   --shadow-hover: 0 16px 40px rgba(30, 61, 40, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
   --nav-height: 72px;
+  --mobile-cta-height: 0px;
+  --flow-indicator-height: 0px;
   --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -51,7 +53,7 @@ body {
   min-height: 100vh;
   opacity: 0;
   transition: opacity 0.4s ease;
-  padding-top: var(--nav-height);
+  padding-top: calc(var(--nav-height) + var(--mobile-cta-height) + var(--flow-indicator-height));
 }
 
 body.page-loaded { opacity: 1; }
@@ -166,10 +168,14 @@ a:hover { color: var(--color-primary-light); }
   font-weight: 600;
 }
 
-.nav-cta {
+.nav-cta--desktop {
   padding: 0.6rem 1.15rem;
   font-size: 0.85rem;
   white-space: nowrap;
+}
+
+.mobile-cta-bar {
+  display: none;
 }
 
 body.nav-menu-open {
@@ -177,7 +183,7 @@ body.nav-menu-open {
 }
 
 body:has(#flow-step-indicator) {
-  padding-top: calc(var(--nav-height) + 2.75rem);
+  --flow-indicator-height: 2.75rem;
 }
 
 .flow-step-indicator {
@@ -490,48 +496,296 @@ body:has(#flow-step-indicator) {
   margin-bottom: 1rem;
 }
 
-/* Hospitals preview */
+/* Hospitals preview — accueil */
+.section-hospitals {
+  background: linear-gradient(180deg, transparent 0%, rgba(45, 90, 61, 0.04) 50%, transparent 100%);
+}
+
 .hospitals-preview {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
 }
 
 .hospital-preview-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-3d);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  position: relative;
+}
+
+.hospital-preview-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--hospital-accent, var(--color-primary)) 55%, transparent),
+    transparent 45%,
+    color-mix(in srgb, var(--hospital-accent, var(--color-primary)) 25%, transparent)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.hospital-preview-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: color-mix(in srgb, var(--hospital-accent, var(--color-primary)) 40%, var(--color-border));
 }
 
 .hospital-preview-image {
   position: relative;
   width: 100%;
-  height: 180px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--color-bg-alt);
+  flex-shrink: 0;
 }
 
 .hospital-preview-card img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .hospital-preview-image .img-fallback {
-  min-height: 180px;
+  min-height: 100%;
   height: 100%;
 }
 
 .hospital-preview-body {
-  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.25rem 1.35rem 1.5rem;
+  flex: 1;
+}
+
+.hospital-preview-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--hospital-accent, var(--color-primary));
+  color: #fff;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
 }
 
 .hospital-preview-body h3 {
-  font-size: 1rem;
-  margin-bottom: 0.35rem;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--color-text);
 }
 
-.hospital-preview-body p {
+.hospital-preview-location {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--hospital-accent, var(--color-primary));
+  margin: 0;
+}
+
+.hospital-preview-desc {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.hospital-preview-specialites {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.hospital-preview-specialites li {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.45;
+}
+
+.hospital-preview-specialites li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--hospital-accent, var(--color-primary));
+  font-weight: 700;
+}
+
+.hospital-preview-toggle {
+  display: none;
+}
+
+.hospital-preview-toggle-chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+
+.hospital-preview-card.is-expanded .hospital-preview-toggle-chevron {
+  transform: rotate(-135deg);
+}
+
+@media (max-width: 1100px) {
+  .hospitals-preview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .hospitals-preview {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .hospital-preview-body {
+    padding: 1rem 1.1rem 1.35rem;
+    gap: 0.5rem;
+  }
+
+  .hospital-preview-badge {
+    font-size: 0.65rem;
+    line-height: 1.4;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .hospital-preview-body h3 {
+    font-size: 1rem;
+  }
+
+  .hospital-preview-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hospital-preview-card.is-expanded .hospital-preview-desc {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .hospital-preview-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    margin-top: 0.15rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--hospital-accent, var(--color-primary)) 35%, var(--color-border));
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--hospital-accent, var(--color-primary)) 8%, var(--color-surface));
+    color: var(--hospital-accent, var(--color-primary));
+    font-family: var(--font-main);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+
+  .hospital-preview-toggle:focus-visible {
+    outline: 2px solid var(--hospital-accent, var(--color-primary));
+    outline-offset: 2px;
+  }
+
+  .hospital-preview-panel {
+    display: none;
+  }
+
+  .hospital-preview-card.is-expanded .hospital-preview-panel {
+    display: block;
+  }
+
+  .hospital-preview-specialites li {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+}
+
+.hospital-description {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0 0 0.5rem;
+}
+
+/* Quick triage — accueil */
+.quick-triage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.quick-triage-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  min-width: 0;
+  padding: 1.15rem 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-main);
+  border: 2px solid var(--color-border);
+  background: var(--gradient-card);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.quick-triage-card:hover,
+.quick-triage-card:focus-visible {
+  border-color: var(--color-primary-light);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  outline: none;
+}
+
+.quick-triage-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.quick-triage-desc {
   font-size: 0.85rem;
   color: var(--color-text-muted);
+  line-height: 1.45;
 }
 
 /* Value section */
@@ -594,6 +848,75 @@ body:has(#flow-step-indicator) {
   transition: width 0.4s ease;
 }
 
+.triage-resume-banner {
+  margin: -1.25rem 0 1.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+}
+
+.triage-resume-banner p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.triage-motif-badge {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.triage-resume-welcome {
+  overflow: hidden;
+  padding: 0;
+}
+
+.triage-resume-welcome-image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.triage-resume-welcome-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.triage-resume-welcome-text {
+  padding: 1.25rem 1.35rem 1.35rem;
+}
+
+.triage-resume-welcome-text h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.triage-resume-welcome-location {
+  margin: 0 0 0.85rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.triage-resume-welcome-text .triage-hint {
+  margin-bottom: 0;
+}
+
 .triage-hint {
   color: var(--color-text-muted);
   font-size: 0.9rem;
@@ -644,6 +967,46 @@ body:has(#flow-step-indicator) {
   margin-top: 0.25rem;
 }
 
+.triage-custom-field {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.triage-custom-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.triage-custom-input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.85rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.triage-custom-input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-color: var(--color-primary-light);
+}
+
+.triage-custom-hint {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
 .triage-nav {
   display: flex;
   gap: 0.75rem;
@@ -674,6 +1037,7 @@ body[data-page="triage"] #triage-question-area {
   grid-column: 1;
   grid-row: 1;
   min-width: 0;
+  min-height: 12rem;
 }
 
 .triage-recap-card {
@@ -733,28 +1097,54 @@ body[data-page="triage"] #triage-question-area {
 
 .hospital-card-image img {
   width: 100%;
-  height: 220px;
+  height: 160px;
   object-fit: cover;
 }
 
-.hospital-card-body {
-  padding: 1.5rem;
+.hospital-card-image .hospital-card-fallback {
+  height: auto;
+  min-height: 0;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.15;
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
 }
 
-.hospital-badge {
-  display: inline-block;
+.hospital-card-body {
+  padding: 1.15rem 1.2rem 1.35rem;
+}
+
+.hospital-card-titlebar {
   background: var(--hospital-accent);
   color: #fff;
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
+  padding: 0.38rem 0.65rem;
+  border-radius: var(--radius);
+  margin-bottom: 0.4rem;
+}
+
+.hospital-card-titlebar h2 {
+  font-size: 0.82rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  margin: 0;
+  color: #fff;
+}
+
+.hospital-card-tagline {
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text-muted);
+  margin: 0 0 0.45rem;
 }
 
 .hospital-card h2 {
-  font-size: 1.15rem;
-  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
 }
 
 .hospital-location {
@@ -1116,16 +1506,21 @@ body[data-page="triage"] #triage-question-area {
   }
 
   .hero-cta-group {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: stretch;
     gap: 0.45rem;
     margin-top: 0.15rem;
   }
 
   .hero-cta-group .btn {
-    width: 100%;
-    padding: 0.62rem 0.85rem;
-    font-size: 0.82rem;
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    padding: 0.55rem 0.45rem;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    text-align: center;
   }
 
   .value-grid { grid-template-columns: 1fr; }
@@ -1221,47 +1616,140 @@ body[data-page="triage"] #triage-question-area {
     font-size: 1rem;
   }
 
-  .nav-cta {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 0.85rem 1rem;
-    font-size: 0.9rem;
-    white-space: normal;
-    text-align: center;
+  .nav-cta--desktop {
+    display: none;
   }
+
+  .mobile-cta-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 0.2rem 0.65rem;
+    background: transparent;
+    border-bottom: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .mobile-cta-bar-btn {
+    pointer-events: auto;
+    width: auto;
+    min-height: 30px;
+    padding: 0.3rem 0.68rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(45, 90, 61, 0.32);
+  }
+
+  body:has(#mobile-cta-bar) {
+    --mobile-cta-height: 2rem;
+  }
+
+  body:has(#flow-step-indicator) {
+    --flow-indicator-height: 2.5rem;
+  }
+
+  body:has(#mobile-cta-bar) .nav-menu-panel,
+  body:has(#mobile-cta-bar) .nav-backdrop {
+    top: calc(var(--nav-height) + var(--mobile-cta-height));
+  }
+
+  body:has(#flow-step-indicator) .nav-menu-panel,
+  body:has(#flow-step-indicator) .nav-backdrop {
+    top: calc(var(--nav-height) + var(--mobile-cta-height) + var(--flow-indicator-height));
+  }
+
+  body:has(#mobile-cta-bar):has(#flow-step-indicator) .nav-menu-panel,
+  body:has(#mobile-cta-bar):has(#flow-step-indicator) .nav-backdrop {
+    top: calc(var(--nav-height) + var(--mobile-cta-height) + var(--flow-indicator-height));
+  }
+
   body[data-page="triage"] .triage-workspace {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  body[data-page="triage"] #triage-question-area {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
   }
   body[data-page="triage"] .triage-nav {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
+    position: sticky;
+    bottom: 0;
+    top: auto;
+    z-index: 50;
     flex-direction: row;
     justify-content: space-between;
     min-width: 0;
     width: 100%;
-    padding-bottom: 0.5rem;
+    padding: 0.75rem 0 0.5rem;
+    margin-top: 0.25rem;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
+    border-bottom: none;
   }
   body[data-page="triage"] .triage-nav .btn {
     width: auto;
     flex: 1;
   }
-  body[data-page="triage"] #triage-question-area {
-    grid-row: 2;
+
+  body[data-page="triage"] .triage-container {
+    padding-bottom: 1rem;
   }
   .section { padding: 2.5rem 1.25rem; }
-  body:has(#flow-step-indicator) {
-    padding-top: calc(var(--nav-height) + 2.5rem);
+
+  #quick-triage-section .section-header {
+    margin-bottom: 1.1rem;
   }
 
-  body:has(#flow-step-indicator) .nav-menu-panel,
-  body:has(#flow-step-indicator) .nav-backdrop {
-    top: calc(var(--nav-height) + 2.5rem);
+  #quick-triage-section .section-header h2 {
+    font-size: clamp(1.05rem, 4.8vw, 1.3rem);
+    margin-bottom: 0.4rem;
+  }
+
+  #quick-triage-section .section-header p {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .quick-triage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .quick-triage-card {
+    padding: 0.7rem 0.75rem;
+    gap: 0.2rem;
+  }
+
+  .quick-triage-card:hover,
+  .quick-triage-card:focus-visible {
+    transform: none;
+  }
+
+  .quick-triage-title {
+    font-size: 0.82rem;
+    line-height: 1.28;
+  }
+
+  .quick-triage-desc {
+    font-size: 0.72rem;
+    line-height: 1.35;
   }
 
   body[data-page="triage"]:has(#flow-step-indicator) .triage-nav {
-    top: calc(var(--nav-height) + 3.25rem);
+    top: calc(var(--nav-height) + var(--flow-indicator-height));
   }
 
   .flow-step-indicator {
@@ -1269,4 +1757,36 @@ body[data-page="triage"] #triage-question-area {
   }
 
   .hospitals-grid { grid-template-columns: 1fr; min-width: 0; }
+
+  .hospital-card-body {
+    padding: 1rem 1.05rem 1.15rem;
+  }
+
+  .hospital-card-titlebar {
+    padding: 0.32rem 0.55rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .hospital-card-titlebar h2 {
+    font-size: 0.76rem;
+    line-height: 1.15;
+  }
+
+  .hospital-card-tagline {
+    font-size: 0.62rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .hospital-card-image img {
+    height: 140px;
+  }
+
+  .hospitals-preview {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .section-hospitals .section-header {
+    margin-bottom: 1.25rem;
+  }
 }

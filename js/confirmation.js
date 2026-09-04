@@ -1,4 +1,4 @@
-import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage, clearMedlinkData } from './storage.js';
+import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage, clearMedlinkData, isTriageComplete } from './storage.js';
 
 const dossierEl = () => document.getElementById('dossier-id-display');
 const whatsappBtn = () => document.getElementById('whatsapp-transmit-btn');
@@ -36,7 +36,7 @@ const renderSummary = (data) => {
 
 const initConfirmation = () => {
   let data = getMedlinkData();
-  if (!data.hospital_id || !data.categorie) {
+  if (!data.hospital_id || !isTriageComplete(data)) {
     window.location.href = './triage.html';
     return;
   }

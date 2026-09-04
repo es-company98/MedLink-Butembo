@@ -11,7 +11,8 @@ const DEFAULT_DATA = {
   quartier: '',
   whatsapp_target: '',
   patient_pseudo: '',
-  tranche_age: ''
+  tranche_age: '',
+  motif_confirmed: false
 };
 
 const sanitizeString = (value, maxLength = 200) => {
@@ -27,6 +28,8 @@ const sanitizeStringArray = (arr, maxItems = 20) => {
     .slice(0, maxItems);
 };
 
+const sanitizeBoolean = (value) => value === true;
+
 const validateData = (raw) => {
   if (!raw || typeof raw !== 'object') return { ...DEFAULT_DATA };
   return {
@@ -40,7 +43,8 @@ const validateData = (raw) => {
     quartier: sanitizeString(raw.quartier, 100),
     whatsapp_target: sanitizeString(raw.whatsapp_target, 20),
     patient_pseudo: sanitizeString(raw.patient_pseudo, 50),
-    tranche_age: sanitizeString(raw.tranche_age, 30)
+    tranche_age: sanitizeString(raw.tranche_age, 30),
+    motif_confirmed: sanitizeBoolean(raw.motif_confirmed)
   };
 };
 
@@ -73,6 +77,17 @@ export const clearMedlinkData = () => {
   }
 };
 
+export const isTriageComplete = (data) =>
+  Boolean(data?.categorie && data?.symptomes?.length > 0 && data?.urgence);
+
+export const getMissingTriageSteps = (data) => {
+  const missing = [];
+  if (!data?.categorie) missing.push('category');
+  if (!data?.symptomes?.length) missing.push('symptoms');
+  if (!data?.urgence) missing.push('urgency');
+  return missing;
+};
+
 export const generateDossierId = () => {
   const now = new Date();
   const y = now.getFullYear();
@@ -93,9 +108,9 @@ export const buildWhatsAppMessage = (data) => {
     `Quartier : ${data.quartier}`,
     '',
     '🔬 *Évaluation médicale*',
-    `Catégorie : ${data.categorie}`,
-    `Urgence : ${data.urgence}`,
-    `Symptômes : ${data.symptomes.join(', ') || 'Non précisé'}`,
+    `Catégorie : ${data.categorie || 'Non renseignée'}`,
+    `Urgence : ${data.urgence || 'Non évaluée'}`,
+    `Symptômes : ${data.symptomes?.length ? data.symptomes.join(', ') : 'Non renseignés'}`,
     '',
     '👤 *Patient*',
     `Identifiant : ${data.patient_pseudo || 'Anonyme'}`,

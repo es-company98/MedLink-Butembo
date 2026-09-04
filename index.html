@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=20250904-3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,6 +73,14 @@
       </div>
     </section>
 
+    <section class="section" id="quick-triage-section">
+      <div class="section-header">
+        <h2 id="quick-triage-title">Quel est votre motif de consultation ?</h2>
+        <p id="quick-triage-desc">Choisissez une catégorie pour démarrer immédiatement votre évaluation.</p>
+      </div>
+      <div class="quick-triage-grid" id="quick-triage-grid"></div>
+    </section>
+
     <section class="section" id="steps-section">
       <div class="section-header">
         <h2 id="steps-title">Votre parcours en 4 étapes</h2>
@@ -106,12 +114,104 @@
       </div>
     </section>
 
-    <section class="section" id="hospitals-preview-section">
+    <section class="section section-hospitals" id="hospitals-preview-section">
       <div class="section-header">
         <h2 id="hospitals-preview-title">Réseau hospitalier agréé de Butembo</h2>
-        <p id="hospitals-preview-desc">Trois structures partenaires, chacune avec son expertise et son plateau technique.</p>
+        <p id="hospitals-preview-desc">Trois structures partenaires à Butembo, Nord-Kivu — chacune avec son expertise et son plateau technique vérifié.</p>
       </div>
-      <div class="hospitals-preview" id="hospitals-preview-grid"></div>
+      <div class="hospitals-preview" id="hospitals-preview-grid">
+
+        <article class="hospital-preview-card card-3d" id="hospital-preview-lacolombe" style="--hospital-accent: #3d7a6a;">
+          <div class="hospital-preview-image">
+            <img
+              src="https://i0.wp.com/rtvh.net/wp-content/uploads/2025/11/CH-LA-COLOMBE.jpg?w=1080&amp;ssl=1"
+              alt="Centre Hospitalier La Colombe — Cellule Kaghondo, Bulengera, Butembo, Nord-Kivu"
+              width="800"
+              height="220"
+              loading="lazy"
+            >
+          </div>
+          <div class="hospital-preview-body">
+            <span class="hospital-preview-badge">Pôle Diagnostic &amp; Équipements Spécialisés — Kaghondo</span>
+            <h3 id="hospital-preview-title-lacolombe">Centre Hospitalier La Colombe</h3>
+            <p class="hospital-preview-location">Bulengera — Kaghondo · Butembo, Nord-Kivu</p>
+            <p class="hospital-preview-desc" id="hospital-preview-desc-lacolombe">Structure sanitaire moderne ouverte à Butembo en juillet 2025. Plus de 60 lits d'accueil : médecine interne, pédiatrie, chirurgie, gynéco-obstétrique, dentisterie et maternité. Plateau technique complet — électrocardiogramme, dentisterie, moniteurs de surveillance, mobiliseur et laboratoire d'analyses. Trois médecins généralistes permanents et des spécialistes par département.</p>
+            <button type="button" class="hospital-preview-toggle" id="hospital-preview-toggle-lacolombe" aria-expanded="false" aria-controls="hospital-preview-panel-lacolombe">
+              <span class="hospital-preview-toggle-text">Voir les détails</span>
+              <span class="hospital-preview-toggle-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="hospital-preview-panel" id="hospital-preview-panel-lacolombe">
+            <ul class="hospital-preview-specialites" aria-label="Spécialités du Centre Hospitalier La Colombe">
+              <li>Consultations spécialisées</li>
+              <li>Examens cardiologiques et dentaires</li>
+              <li>Diagnostic biologique rapide</li>
+              <li>Prise en charge discrète</li>
+            </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="hospital-preview-card card-3d" id="hospital-preview-katwa" style="--hospital-accent: #b85c38;">
+          <div class="hospital-preview-image">
+            <img
+              src="https://drc.unfpa.org/sites/default/files/2021/maternite_butembo.jpg"
+              alt="Maternité de l'Hôpital Général de Référence de Katwa — Butembo, Nord-Kivu"
+              width="800"
+              height="220"
+              loading="lazy"
+            >
+          </div>
+          <div class="hospital-preview-body">
+            <span class="hospital-preview-badge">Institution Publique Historique — Maternité &amp; Urgences 24/7</span>
+            <h3 id="hospital-preview-title-katwa">Hôpital Général de Référence de Katwa</h3>
+            <p class="hospital-preview-location">Mususa — Bwinongo · Butembo, Nord-Kivu</p>
+            <p class="hospital-preview-desc" id="hospital-preview-desc-katwa">Institution paraétatique fondée en 1952, à 7 km au sud-est du centre-ville de Butembo (commune Mususa, quartier Bwinongo). Grande maternité de référence réhabilitée et modernisée, avec environ 100 accouchements par mois. Urgences et réanimation 24h/24, 7j/7. Site avancé de prélèvement sanguin pour les urgences transfusionnelles. Hôpital polyvalent de référence pour la zone de santé de Katwa.</p>
+            <button type="button" class="hospital-preview-toggle" id="hospital-preview-toggle-katwa" aria-expanded="false" aria-controls="hospital-preview-panel-katwa">
+              <span class="hospital-preview-toggle-text">Voir les détails</span>
+              <span class="hospital-preview-toggle-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="hospital-preview-panel" id="hospital-preview-panel-katwa">
+            <ul class="hospital-preview-specialites" aria-label="Spécialités de l'HGR Katwa">
+              <li>Grande Maternité de Référence</li>
+              <li>Urgences 24h/24 et 7j/7</li>
+              <li>Prélèvement sanguin d'urgence</li>
+              <li>Centre de traitement spécialisé</li>
+            </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="hospital-preview-card card-3d" id="hospital-preview-matanda" style="--hospital-accent: #4a5a8a;">
+          <div class="hospital-preview-image">
+            <img
+              src="https://digitalcongo.org/plks_vues/fichiers/images/1670936985.jpg"
+              alt="Hôpital de Référence Secondaire de Matanda — Mususa, Butembo, Nord-Kivu"
+              width="800"
+              height="220"
+              loading="lazy"
+            >
+          </div>
+          <div class="hospital-preview-body">
+            <span class="hospital-preview-badge">Bloc Chirurgical de Pointe &amp; Neurochirurgie — Axe Matanda</span>
+            <h3 id="hospital-preview-title-matanda">Hôpital de Référence Secondaire de Matanda</h3>
+            <p class="hospital-preview-location">Mususa — Matanda · Butembo, Nord-Kivu</p>
+            <p class="hospital-preview-desc" id="hospital-preview-desc-matanda">Hôpital de Référence Secondaire sur la colline de Matanda (commune Mususa, Butembo). Anesthésie-réanimation, soins intensifs et urgences 24h/24. Chirurgies générales, ORL, maxillo-faciales, neurochirurgicales, pédiatriques et gynéco-obstétricales. Site avancé de prélèvement sanguin en coordination avec l'HGR Katwa.</p>
+            <button type="button" class="hospital-preview-toggle" id="hospital-preview-toggle-matanda" aria-expanded="false" aria-controls="hospital-preview-panel-matanda">
+              <span class="hospital-preview-toggle-text">Voir les détails</span>
+              <span class="hospital-preview-toggle-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="hospital-preview-panel" id="hospital-preview-panel-matanda">
+            <ul class="hospital-preview-specialites" aria-label="Spécialités de l'Hôpital de Matanda">
+              <li>Bloc opératoire ultra-moderne</li>
+              <li>Pôle de neurochirurgie</li>
+              <li>Réserve sang &amp; prélèvement avancé</li>
+              <li>Pavillons d'urgence haute capacité</li>
+            </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </section>
 
     <section class="section" id="value-section">

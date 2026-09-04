@@ -1,5 +1,5 @@
 import { HOSPITALS } from './hospitals-data.js';
-import { saveMedlinkData, getMedlinkData } from './storage.js';
+import { saveMedlinkData, getMedlinkData, isTriageComplete } from './storage.js';
 import { createImageWithFallback, createImageFallback } from './ui.js';
 
 const grid = () => document.getElementById('hospitals-grid');
@@ -39,7 +39,9 @@ const createHospitalCard = (hospital, isRecommended) => {
   const imgWrap = document.createElement('div');
   imgWrap.className = 'hospital-card-image';
   const img = createImageWithFallback(hospital.image, hospital.image_alt, 800, 500, 'hospital-img');
-  const fallback = createImageFallback(hospital.nom);
+  const fallback = createImageFallback('Photo indisponible');
+  fallback.classList.add('hospital-card-fallback');
+  fallback.setAttribute('aria-label', `${hospital.nom} — illustration indisponible`);
   imgWrap.appendChild(img);
   imgWrap.appendChild(fallback);
   if (!hospital.image) fallback.hidden = false;
@@ -55,19 +57,29 @@ const createHospitalCard = (hospital, isRecommended) => {
     body.appendChild(recBadge);
   }
 
-  const badge = document.createElement('span');
-  badge.className = 'hospital-badge';
-  badge.textContent = hospital.badge;
-  body.appendChild(badge);
-
+  const titlebar = document.createElement('div');
+  titlebar.className = 'hospital-card-titlebar';
   const title = document.createElement('h2');
   title.textContent = hospital.nom;
-  body.appendChild(title);
+  titlebar.appendChild(title);
+  body.appendChild(titlebar);
+
+  const tagline = document.createElement('p');
+  tagline.className = 'hospital-card-tagline';
+  tagline.textContent = hospital.badge;
+  body.appendChild(tagline);
 
   const loc = document.createElement('p');
   loc.className = 'hospital-location';
   loc.textContent = hospital.quartier;
   body.appendChild(loc);
+
+  if (hospital.description) {
+    const desc = document.createElement('p');
+    desc.className = 'hospital-description';
+    desc.textContent = hospital.description;
+    body.appendChild(desc);
+  }
 
   const specs = document.createElement('ul');
   specs.className = 'hospital-specialites';
@@ -95,14 +107,22 @@ const createHospitalCard = (hospital, isRecommended) => {
   body.appendChild(hint);
 
   selectBtn.addEventListener('click', () => {
-    saveMedlinkData({
+    const updated = saveMedlinkData({
       hospital_id: hospital.hospital_id,
       hopital_choisi: hospital.nom,
       quartier: hospital.quartier,
-      whatsapp_target: hospital.whatsapp_target
+      whatsapp_target: hospital.whatsapp_target,
+      categorie: '',
+      symptomes: [],
+      urgence: ''
     });
+
     document.documentElement.style.setProperty('--partner-accent', hospital.accent);
-    window.location.href = './consultation.html';
+    if (isTriageComplete(updated)) {
+      window.location.href = './consultation.html';
+      return;
+    }
+    window.location.href = './triage.html';
   });
 
   card.appendChild(body);
@@ -111,10 +131,6 @@ const createHospitalCard = (hospital, isRecommended) => {
 
 const initHospitals = () => {
   const data = getMedlinkData();
-  if (!data.categorie) {
-    window.location.href = './triage.html';
-    return;
-  }
 
   const container = grid();
   if (!container) return;
