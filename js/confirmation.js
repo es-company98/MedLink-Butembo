@@ -1,8 +1,10 @@
-import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage } from './storage.js';
+import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage, clearMedlinkData } from './storage.js';
 
 const dossierEl = () => document.getElementById('dossier-id-display');
 const whatsappBtn = () => document.getElementById('whatsapp-transmit-btn');
 const summaryEl = () => document.getElementById('confirmation-summary');
+const transmitTargetEl = () => document.getElementById('confirmation-transmit-target');
+const newConsultBtn = () => document.getElementById('new-consultation-btn');
 
 const renderSummary = (data) => {
   const el = summaryEl();
@@ -13,8 +15,10 @@ const renderSummary = (data) => {
     ['Structure', data.hopital_choisi],
     ['Quartier', data.quartier],
     ['Catégorie', data.categorie],
+    ['Symptômes', data.symptomes?.length ? data.symptomes.join(', ') : '—'],
     ['Urgence', data.urgence],
-    ['Patient', data.patient_pseudo || 'Anonyme']
+    ['Patient', data.patient_pseudo || 'Anonyme'],
+    ['Tranche d\'âge', data.tranche_age || 'Non précisée']
   ];
 
   items.forEach(([label, value]) => {
@@ -49,6 +53,11 @@ const initConfirmation = () => {
     dossierDisplay.textContent = `#${data.dossier_id}`;
   }
 
+  const targetEl = transmitTargetEl();
+  if (targetEl) {
+    targetEl.textContent = `Transmission vers la garde — ${data.hopital_choisi}`;
+  }
+
   renderSummary(data);
 
   const btn = whatsappBtn();
@@ -57,6 +66,16 @@ const initConfirmation = () => {
     const url = `https://wa.me/${data.whatsapp_target}?text=${encodeURIComponent(message)}`;
     btn.addEventListener('click', () => {
       window.open(url, '_blank', 'noopener,noreferrer');
+      const newBtn = newConsultBtn();
+      if (newBtn) newBtn.hidden = false;
+    });
+  }
+
+  const resetBtn = newConsultBtn();
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      clearMedlinkData();
+      window.location.href = './triage.html';
     });
   }
 };

@@ -1,11 +1,18 @@
 export const createImageWithFallback = (src, alt, width, height, className) => {
   const img = document.createElement('img');
-  img.src = src;
   img.alt = alt;
   img.width = width;
   img.height = height;
   img.loading = 'lazy';
   if (className) img.className = className;
+
+  if (!src) {
+    img.style.display = 'none';
+    img.dataset.skipLoad = 'true';
+    return img;
+  }
+
+  img.src = src;
   img.addEventListener('error', () => {
     img.style.display = 'none';
     const fallback = img.nextElementSibling;
@@ -215,10 +222,53 @@ export const createFooter = () => {
   return footer;
 };
 
+const FLOW_STEPS = {
+  triage: { current: 1, total: 5, label: 'Questionnaire' },
+  hospitals: { current: 2, total: 5, label: 'Choix de la structure' },
+  consultation: { current: 3, total: 5, label: 'Qualification' },
+  confirmation: { current: 4, total: 5, label: 'Confirmation' }
+};
+
+export const createStepIndicator = (activePage) => {
+  const step = FLOW_STEPS[activePage];
+  if (!step) return null;
+
+  const bar = document.createElement('div');
+  bar.className = 'flow-step-indicator';
+  bar.id = 'flow-step-indicator';
+  bar.setAttribute('aria-label', `Étape ${step.current} sur ${step.total} — ${step.label}`);
+
+  const text = document.createElement('p');
+  text.className = 'flow-step-indicator-text';
+  text.textContent = `Étape ${step.current} sur ${step.total} — ${step.label}`;
+
+  const progress = document.createElement('div');
+  progress.className = 'flow-step-indicator-bar';
+  progress.setAttribute('role', 'progressbar');
+  progress.setAttribute('aria-valuenow', String(step.current));
+  progress.setAttribute('aria-valuemin', '1');
+  progress.setAttribute('aria-valuemax', String(step.total));
+
+  const fill = document.createElement('div');
+  fill.className = 'flow-step-indicator-fill';
+  fill.style.width = `${(step.current / step.total) * 100}%`;
+  progress.appendChild(fill);
+
+  bar.appendChild(text);
+  bar.appendChild(progress);
+  return bar;
+};
+
 export const mountLayout = (activePage) => {
   const navSlot = document.getElementById('nav-slot');
   const footerSlot = document.getElementById('footer-slot');
-  if (navSlot) navSlot.replaceChildren(createNav(activePage));
+  if (navSlot) {
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(createNav(activePage));
+    const stepIndicator = createStepIndicator(activePage);
+    if (stepIndicator) fragment.appendChild(stepIndicator);
+    navSlot.replaceChildren(fragment);
+  }
   if (footerSlot) footerSlot.replaceChildren(createFooter());
 };
 

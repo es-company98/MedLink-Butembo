@@ -14,7 +14,7 @@ export const HOSPITALS = [
     badge: 'Pôle Diagnostic & Équipements Spécialisés — Kaghondo',
     temps_attente: '15–30 min',
     accent: '#3d7a6a',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=500&fit=crop',
+    image: '',
     image_alt: 'Bureau de consultation cardiologique moderne — CH La Colombe Butembo'
   },
   {
@@ -28,11 +28,11 @@ export const HOSPITALS = [
       'Prélèvement sanguin d\'urgence',
       'Centre de traitement spécialisé'
     ],
-    whatsapp_target: '243979692582',
+    whatsapp_target: '243840344307',
     badge: 'Institution Publique Historique — Maternité & Urgences 24/7',
     temps_attente: '20–45 min',
     accent: '#b85c38',
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop',
+    image: '',
     image_alt: 'Maternité modernisée et pôle de soins continus — HGR Katwa Butembo'
   },
   {
@@ -46,11 +46,11 @@ export const HOSPITALS = [
       'Réserve sang & prélèvement avancé',
       'Pavillons d\'urgence haute capacité'
     ],
-    whatsapp_target: '243979692582',
+    whatsapp_target: '243843858955',
     badge: 'Bloc Chirurgical de Pointe & Neurochirurgie — Axe Matanda',
     temps_attente: '25–50 min',
     accent: '#4a5a8a',
-    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=500&fit=crop',
+    image: '',
     image_alt: 'Bloc opératoire technologique — Hôpital de Matanda Butembo'
   }
 ];

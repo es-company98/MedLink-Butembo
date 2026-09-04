@@ -4,9 +4,36 @@ import { createImageWithFallback, createImageFallback } from './ui.js';
 
 const grid = () => document.getElementById('hospitals-grid');
 
-const createHospitalCard = (hospital) => {
+export const getRecommendedHospitalId = (data) => {
+  const cat = data.categorie || '';
+  const urg = data.urgence || '';
+  const symptoms = data.symptomes || [];
+
+  if (cat.includes('Maternité')) return 'hgr-katwa';
+  if (cat.includes('Intime') || cat.includes('Spécialisée')) return 'ch-lacolombe';
+  if (urg === 'Critique' || urg === 'Élevée') {
+    const needsSurgery = symptoms.some(
+      (s) => s.includes('Traumatisme') || s.includes('thoracique') || s.includes('Perte de conscience')
+    );
+    return needsSurgery ? 'hopital-matanda' : 'hgr-katwa';
+  }
+  if (cat.includes('Urgence')) return 'hgr-katwa';
+  return 'ch-lacolombe';
+};
+
+const sortHospitalsByRecommendation = (hospitals, recommendedId) => {
+  const sorted = [...hospitals];
+  sorted.sort((a, b) => {
+    if (a.hospital_id === recommendedId) return -1;
+    if (b.hospital_id === recommendedId) return 1;
+    return 0;
+  });
+  return sorted;
+};
+
+const createHospitalCard = (hospital, isRecommended) => {
   const card = document.createElement('article');
-  card.className = 'hospital-card card-3d';
+  card.className = `hospital-card card-3d${isRecommended ? ' hospital-card--recommended' : ''}`;
   card.style.setProperty('--hospital-accent', hospital.accent);
 
   const imgWrap = document.createElement('div');
@@ -15,10 +42,18 @@ const createHospitalCard = (hospital) => {
   const fallback = createImageFallback(hospital.nom);
   imgWrap.appendChild(img);
   imgWrap.appendChild(fallback);
+  if (!hospital.image) fallback.hidden = false;
   card.appendChild(imgWrap);
 
   const body = document.createElement('div');
   body.className = 'hospital-card-body';
+
+  if (isRecommended) {
+    const recBadge = document.createElement('span');
+    recBadge.className = 'hospital-recommended-badge';
+    recBadge.textContent = 'Recommandé pour votre situation';
+    body.appendChild(recBadge);
+  }
 
   const badge = document.createElement('span');
   badge.className = 'hospital-badge';
@@ -48,19 +83,16 @@ const createHospitalCard = (hospital) => {
   wait.textContent = `Temps d'attente estimé : ${hospital.temps_attente}`;
   body.appendChild(wait);
 
-  const tooltipWrap = document.createElement('div');
-  tooltipWrap.className = 'hover-tooltip-wrap';
   const selectBtn = document.createElement('button');
   selectBtn.type = 'button';
   selectBtn.className = 'btn btn-primary hospital-select-btn';
-  selectBtn.textContent = 'Orienté vers cette structure';
-  const tooltip = document.createElement('div');
-  tooltip.className = 'hover-tooltip';
-  tooltip.setAttribute('role', 'tooltip');
-  tooltip.textContent = `Transmission directe vers ${hospital.quartier} — dossier confidentiel`;
-  tooltipWrap.appendChild(selectBtn);
-  tooltipWrap.appendChild(tooltip);
-  body.appendChild(tooltipWrap);
+  selectBtn.textContent = 'Choisir cette structure';
+  body.appendChild(selectBtn);
+
+  const hint = document.createElement('p');
+  hint.className = 'hospital-select-hint';
+  hint.textContent = `Transmission directe vers ${hospital.quartier} — dossier confidentiel`;
+  body.appendChild(hint);
 
   selectBtn.addEventListener('click', () => {
     saveMedlinkData({
@@ -86,8 +118,13 @@ const initHospitals = () => {
 
   const container = grid();
   if (!container) return;
+
+  const recommendedId = getRecommendedHospitalId(data);
+  const sorted = sortHospitalsByRecommendation(HOSPITALS, recommendedId);
   const fragment = document.createDocumentFragment();
-  HOSPITALS.forEach((h) => fragment.appendChild(createHospitalCard(h)));
+  sorted.forEach((h) => {
+    fragment.appendChild(createHospitalCard(h, h.hospital_id === recommendedId));
+  });
   container.replaceChildren(fragment);
 };
 

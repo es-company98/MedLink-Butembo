@@ -16,6 +16,7 @@ const renderHospitalPreviews = () => {
     const fallback = createImageFallback(h.nom);
     imgWrap.appendChild(img);
     imgWrap.appendChild(fallback);
+    if (!h.image) fallback.hidden = false;
     card.appendChild(imgWrap);
 
     const body = document.createElement('div');

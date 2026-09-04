@@ -1,5 +1,5 @@
 import { TRIAGE_CATEGORIES, URGENCY_LEVELS, getSymptomsForCategory } from './triage-questions.js';
-import { saveMedlinkData, getMedlinkData } from './storage.js';
+import { saveMedlinkData, clearMedlinkData } from './storage.js';
 
 const STEPS = ['category', 'symptoms', 'urgency', 'confirm'];
 
@@ -9,16 +9,18 @@ let selectedSymptoms = [];
 let selectedUrgency = null;
 
 const progressBar = () => document.getElementById('triage-progress');
+const progressWrap = () => document.getElementById('triage-progress-wrap');
 const questionArea = () => document.getElementById('triage-question-area');
 const prevBtn = () => document.getElementById('triage-prev-btn');
 const nextBtn = () => document.getElementById('triage-next-btn');
 
 const updateProgress = () => {
   const bar = progressBar();
+  const wrap = progressWrap();
   if (!bar) return;
   const pct = ((currentStep + 1) / STEPS.length) * 100;
   bar.style.width = `${pct}%`;
-  bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+  if (wrap) wrap.setAttribute('aria-valuenow', String(Math.round(pct)));
 };
 
 const createOptionButton = (label, description, isSelected, onClick) => {
@@ -57,6 +59,9 @@ const renderCategoryStep = () => {
   TRIAGE_CATEGORIES.forEach((cat) => {
     grid.appendChild(
       createOptionButton(cat.label, cat.description, selectedCategory?.id === cat.id, () => {
+        if (selectedCategory?.id !== cat.id) {
+          selectedSymptoms = [];
+        }
         selectedCategory = cat;
         renderCategoryStep();
         nextBtn().disabled = false;
@@ -193,14 +198,11 @@ const saveTriage = () => {
 };
 
 const initTriage = () => {
-  const existing = getMedlinkData();
-  if (existing.categorie) {
-    const cat = TRIAGE_CATEGORIES.find((c) => c.label === existing.categorie);
-    if (cat) selectedCategory = cat;
-    selectedSymptoms = existing.symptomes || [];
-    const urg = URGENCY_LEVELS.find((u) => u.label === existing.urgence);
-    if (urg) selectedUrgency = urg;
-  }
+  clearMedlinkData();
+  currentStep = 0;
+  selectedCategory = null;
+  selectedSymptoms = [];
+  selectedUrgency = null;
 
   prevBtn().addEventListener('click', () => {
     if (currentStep > 0) {
