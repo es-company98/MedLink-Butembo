@@ -1,5 +1,7 @@
 const STORAGE_KEY = 'medlink_triage_data';
 
+const CONSULTATION_MODES = new Set(['sms', 'appel']);
+
 const DEFAULT_DATA = {
   dossier_id: '',
   date: '',
@@ -12,7 +14,10 @@ const DEFAULT_DATA = {
   whatsapp_target: '',
   patient_pseudo: '',
   tranche_age: '',
-  motif_confirmed: false
+  mode_consultation: '',
+  medecin_id: '',
+  medecin_nom: '',
+  medecin_specialite: ''
 };
 
 const sanitizeString = (value, maxLength = 200) => {
@@ -28,7 +33,9 @@ const sanitizeStringArray = (arr, maxItems = 20) => {
     .slice(0, maxItems);
 };
 
-const sanitizeBoolean = (value) => value === true;
+
+const sanitizeConsultationMode = (value) =>
+  CONSULTATION_MODES.has(value) ? value : '';
 
 const validateData = (raw) => {
   if (!raw || typeof raw !== 'object') return { ...DEFAULT_DATA };
@@ -44,7 +51,10 @@ const validateData = (raw) => {
     whatsapp_target: sanitizeString(raw.whatsapp_target, 20),
     patient_pseudo: sanitizeString(raw.patient_pseudo, 50),
     tranche_age: sanitizeString(raw.tranche_age, 30),
-    motif_confirmed: sanitizeBoolean(raw.motif_confirmed)
+    mode_consultation: sanitizeConsultationMode(raw.mode_consultation),
+    medecin_id: sanitizeString(raw.medecin_id, 50),
+    medecin_nom: sanitizeString(raw.medecin_nom, 100),
+    medecin_specialite: sanitizeString(raw.medecin_specialite, 100)
   };
 };
 
@@ -60,8 +70,8 @@ export const getMedlinkData = () => {
 
 export const saveMedlinkData = (partial) => {
   const current = getMedlinkData();
-  const merged = validateData({ ...current, ...partial });
   try {
+    const merged = validateData({ ...current, ...partial });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
     return merged;
   } catch {
@@ -78,14 +88,26 @@ export const clearMedlinkData = () => {
 };
 
 export const isTriageComplete = (data) =>
-  Boolean(data?.categorie && data?.symptomes?.length > 0 && data?.urgence);
+  Boolean(
+    data?.categorie
+    && data?.medecin_id
+    && data?.symptomes?.length > 0
+    && data?.urgence
+  );
 
 export const getMissingTriageSteps = (data) => {
   const missing = [];
   if (!data?.categorie) missing.push('category');
   if (!data?.symptomes?.length) missing.push('symptoms');
   if (!data?.urgence) missing.push('urgency');
+  if (!data?.medecin_id) missing.push('doctor');
   return missing;
+};
+
+export const getConsultationModeLabel = (mode) => {
+  if (mode === 'sms') return 'Par SMS';
+  if (mode === 'appel') return 'Par appel téléphonique';
+  return 'Non précisé';
 };
 
 export const generateDossierId = () => {
@@ -107,16 +129,18 @@ export const buildWhatsAppMessage = (data) => {
     `Structure : ${data.hopital_choisi}`,
     `Quartier : ${data.quartier}`,
     '',
-    '🔬 *Évaluation médicale*',
-    `Catégorie : ${data.categorie || 'Non renseignée'}`,
+    '🔬 *Triage médical*',
+    `Motif : ${data.categorie || 'Non renseigné'}`,
+    `Médecin : ${data.medecin_nom || 'Non renseigné'}${data.medecin_specialite ? ` (${data.medecin_specialite})` : ''}`,
     `Urgence : ${data.urgence || 'Non évaluée'}`,
     `Symptômes : ${data.symptomes?.length ? data.symptomes.join(', ') : 'Non renseignés'}`,
     '',
     '👤 *Patient*',
     `Identifiant : ${data.patient_pseudo || 'Anonyme'}`,
     `Tranche d'âge : ${data.tranche_age || 'Non précisée'}`,
+    `Mode de consultation : ${getConsultationModeLabel(data.mode_consultation)}`,
     '',
-    '— Transmis via MedLink Butembo (Phase Pilote)'
+    '— Transmis via Centre Hospitalier La Colombe (Phase Pilote)'
   ];
   return lines.join('\n');
 };

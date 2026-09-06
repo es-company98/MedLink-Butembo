@@ -5,35 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
   <meta name="referrer" content="no-referrer">
-  <title>Questionnaire de Santé — MedLink Butembo</title>
+  <title>Triage — Centre Hospitalier La Colombe</title>
   <meta name="description" content="Décrivez vos symptômes en toute confidentialité pour être orienté vers le réseau hospitalier de Butembo.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="./triage.html">
-  <meta property="og:title" content="Questionnaire de Santé — MedLink Butembo">
-  <meta property="og:description" content="Évaluez vos symptômes en toute discrétion. Orientation vers l'hôpital adapté à votre situation.">
+  <meta property="og:title" content="Triage — Centre Hospitalier La Colombe">
+  <meta property="og:description" content="Poursuivez votre triage en toute discrétion. Symptômes, urgence et orientation vers le Centre Hospitalier La Colombe.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=20250906-1">
 </head>
 <body data-page="triage">
   <div id="nav-slot"></div>
 
   <main id="main-content">
     <div class="triage-container" id="triage-container">
-      <h1 id="triage-title">Décrivez vos symptômes</h1>
-      <p class="triage-hint" id="triage-intro">Quelques questions pour comprendre votre situation et vous orienter vers la bonne structure hospitalière. Vos réponses ne sont transmises qu'à l'hôpital choisi, lorsque vous le décidez.</p>
+      <h1 id="triage-title">Poursuivez votre triage</h1>
+      <p class="triage-hint" id="triage-intro">Symptômes, urgence et choix du médecin — vos réponses ne sont transmises qu'à l'hôpital choisi, lorsque vous le décidez.</p>
 
       <div class="triage-progress-wrap" id="triage-progress-wrap" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
         <div class="triage-progress-bar" id="triage-progress"></div>
       </div>
 
+      <div class="triage-motif-banner triage-resume-banner" id="triage-motif-banner" hidden></div>
       <div class="triage-resume-banner" id="triage-resume-banner" hidden></div>
 
       <div class="triage-workspace" id="triage-workspace">
         <div id="triage-question-area"></div>
-        <aside class="triage-nav" id="triage-nav" aria-label="Navigation du questionnaire">
+        <aside class="triage-nav" id="triage-nav" aria-label="Navigation du triage">
           <button type="button" class="btn btn-secondary" id="triage-prev-btn" hidden>Retour</button>
           <button type="button" class="btn btn-primary" id="triage-next-btn" disabled>Continuer</button>
         </aside>

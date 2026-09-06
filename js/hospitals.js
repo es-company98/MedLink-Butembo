@@ -1,39 +1,23 @@
-import { HOSPITALS } from './hospitals-data.js';
-import { saveMedlinkData, getMedlinkData, isTriageComplete } from './storage.js';
+import { HOSPITALS, getDefaultHospital } from './hospitals-data.js';
+import { saveMedlinkData, isTriageComplete } from './storage.js';
 import { createImageWithFallback, createImageFallback } from './ui.js';
 
 const grid = () => document.getElementById('hospitals-grid');
 
-export const getRecommendedHospitalId = (data) => {
-  const cat = data.categorie || '';
-  const urg = data.urgence || '';
-  const symptoms = data.symptomes || [];
-
-  if (cat.includes('Maternité')) return 'hgr-katwa';
-  if (cat.includes('Intime') || cat.includes('Spécialisée')) return 'ch-lacolombe';
-  if (urg === 'Critique' || urg === 'Élevée') {
-    const needsSurgery = symptoms.some(
-      (s) => s.includes('Traumatisme') || s.includes('thoracique') || s.includes('Perte de conscience')
-    );
-    return needsSurgery ? 'hopital-matanda' : 'hgr-katwa';
-  }
-  if (cat.includes('Urgence')) return 'hgr-katwa';
-  return 'ch-lacolombe';
-};
-
-const sortHospitalsByRecommendation = (hospitals, recommendedId) => {
-  const sorted = [...hospitals];
-  sorted.sort((a, b) => {
-    if (a.hospital_id === recommendedId) return -1;
-    if (b.hospital_id === recommendedId) return 1;
-    return 0;
+export const assignDefaultHospital = () => {
+  const hospital = getDefaultHospital();
+  const current = getMedlinkData();
+  return saveMedlinkData({
+    hospital_id: hospital.hospital_id,
+    hopital_choisi: hospital.nom,
+    quartier: hospital.quartier,
+    whatsapp_target: current.whatsapp_target || hospital.whatsapp_target
   });
-  return sorted;
 };
 
-const createHospitalCard = (hospital, isRecommended) => {
+const createHospitalCard = (hospital) => {
   const card = document.createElement('article');
-  card.className = `hospital-card card-3d${isRecommended ? ' hospital-card--recommended' : ''}`;
+  card.className = 'hospital-card card-3d hospital-card--single';
   card.style.setProperty('--hospital-accent', hospital.accent);
 
   const imgWrap = document.createElement('div');
@@ -49,13 +33,6 @@ const createHospitalCard = (hospital, isRecommended) => {
 
   const body = document.createElement('div');
   body.className = 'hospital-card-body';
-
-  if (isRecommended) {
-    const recBadge = document.createElement('span');
-    recBadge.className = 'hospital-recommended-badge';
-    recBadge.textContent = 'Recommandé pour votre situation';
-    body.appendChild(recBadge);
-  }
 
   const titlebar = document.createElement('div');
   titlebar.className = 'hospital-card-titlebar';
@@ -130,18 +107,11 @@ const createHospitalCard = (hospital, isRecommended) => {
 };
 
 const initHospitals = () => {
-  const data = getMedlinkData();
-
   const container = grid();
   if (!container) return;
 
-  const recommendedId = getRecommendedHospitalId(data);
-  const sorted = sortHospitalsByRecommendation(HOSPITALS, recommendedId);
-  const fragment = document.createDocumentFragment();
-  sorted.forEach((h) => {
-    fragment.appendChild(createHospitalCard(h, h.hospital_id === recommendedId));
-  });
-  container.replaceChildren(fragment);
+  const hospital = getDefaultHospital();
+  container.replaceChildren(createHospitalCard(hospital));
 };
 
 if (document.body.dataset.page === 'hospitals') {

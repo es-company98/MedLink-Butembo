@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
   <meta name="referrer" content="no-referrer">
-  <title>Confirmation & Transmission — MedLink Butembo</title>
+  <title>Confirmation & Transmission — Centre Hospitalier La Colombe</title>
   <meta name="description" content="Votre dossier médical est prêt. Transmettez-le directement à la garde hospitalière via WhatsApp.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="./confirmation.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=20250906-1">
 </head>
 <body data-page="confirmation">
   <div id="nav-slot"></div>
@@ -29,8 +29,14 @@
 
       <div class="confirmation-summary card-3d" id="confirmation-summary"></div>
 
+      <section class="confirmation-mode-section" id="confirmation-mode-section" aria-labelledby="confirmation-mode-title">
+        <h2 id="confirmation-mode-title">Mode de consultation souhaité</h2>
+        <p class="triage-hint" id="confirmation-mode-desc">Choisissez comment vous souhaitez être contacté par le Centre Hospitalier La Colombe avant la transmission.</p>
+        <div class="confirmation-mode-options" id="confirmation-mode-options" role="radiogroup" aria-labelledby="confirmation-mode-title"></div>
+      </section>
+
       <div class="confirmation-actions" id="confirmation-actions">
-        <button type="button" class="btn whatsapp-btn" id="whatsapp-transmit-btn">Transmettre mon dossier à l'hôpital</button>
+        <button type="button" class="btn whatsapp-btn" id="whatsapp-transmit-btn" disabled>Transmettre mon dossier à l'hôpital</button>
         <button type="button" class="btn btn-secondary" id="new-consultation-btn" hidden>Initier une nouvelle consultation</button>
         <button type="button" class="btn btn-disabled" id="payment-disabled-btn" disabled aria-disabled="true" aria-label="Service payant non applicable — accès entièrement gratuit durant la phase pilote">
           <span class="btn-strike">Service payant</span>

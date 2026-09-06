@@ -1,4 +1,5 @@
 import { getMedlinkData, saveMedlinkData, isTriageComplete } from './storage.js';
+import { assignDefaultHospital } from './hospitals.js';
 
 const recapEl = () => document.getElementById('consultation-recap');
 const form = () => document.getElementById('consultation-form');
@@ -25,7 +26,8 @@ const renderRecap = (data) => {
   card.className = 'consultation-recap-card card-3d';
 
   const rows = [
-    ['Catégorie', data.categorie],
+    ['Motif', data.categorie],
+    ['Médecin', data.medecin_nom ? `${data.medecin_nom}${data.medecin_specialite ? ` — ${data.medecin_specialite}` : ''}` : '—'],
     ['Symptômes', data.symptomes.join(', ') || '—'],
     ['Urgence', data.urgence],
     ['Structure choisie', data.hopital_choisi],
@@ -48,10 +50,9 @@ const renderRecap = (data) => {
 };
 
 const initConsultation = () => {
-  const data = getMedlinkData();
+  let data = getMedlinkData();
   if (!data.hospital_id) {
-    window.location.href = './hospitals.html';
-    return;
+    data = assignDefaultHospital();
   }
   if (!isTriageComplete(data)) {
     window.location.href = './triage.html';

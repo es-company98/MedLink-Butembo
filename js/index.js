@@ -9,7 +9,7 @@ const startQuickTriage = (category) => {
     symptomes: [],
     urgence: ''
   });
-  window.location.href = './triage.html';
+  window.location.assign('./triage.html');
 };
 
 const renderQuickTriage = () => {

@@ -1,3 +1,5 @@
+import { APP_NAME, APP_TAGLINE } from './app-config.js';
+
 export const createImageWithFallback = (src, alt, width, height, className) => {
   const img = document.createElement('img');
   img.alt = alt;
@@ -92,6 +94,9 @@ const bindMobileNav = (nav) => {
   });
 };
 
+const getMotifEntryHref = (activePage) =>
+  activePage === 'index' ? '#quick-triage-section' : './index.html#quick-triage-section';
+
 export const createMobileCtaBar = (activePage) => {
   if (activePage === 'triage') return null;
 
@@ -100,10 +105,10 @@ export const createMobileCtaBar = (activePage) => {
   bar.id = 'mobile-cta-bar';
 
   const cta = document.createElement('a');
-  cta.href = './triage.html';
+  cta.href = getMotifEntryHref(activePage);
   cta.className = 'btn btn-primary mobile-cta-bar-btn';
   cta.id = 'mobile-cta-primary';
-  cta.textContent = 'Consultation discrète';
+  cta.textContent = 'Initier ma consultation discrète';
 
   bar.appendChild(cta);
   return bar;
@@ -117,7 +122,8 @@ export const createNav = (activePage) => {
   const brand = document.createElement('a');
   brand.href = './index.html';
   brand.className = 'nav-brand';
-  brand.textContent = 'MedLink Butembo';
+  brand.textContent = APP_NAME;
+  brand.title = APP_NAME;
 
   const toggle = document.createElement('button');
   toggle.type = 'button';
@@ -143,7 +149,7 @@ export const createNav = (activePage) => {
 
   const pages = [
     { href: './index.html', label: 'Accueil', id: 'index' },
-    { href: './triage.html', label: 'Questionnaire', id: 'triage' },
+    { href: './triage.html', label: 'Consultation discrète', id: 'triage' },
     { href: './hospitals.html', label: 'Hôpitaux', id: 'hospitals' },
     { href: './apropos.html', label: 'À propos', id: 'apropos' }
   ];
@@ -166,7 +172,7 @@ export const createNav = (activePage) => {
   actions.appendChild(links);
 
   const cta = document.createElement('a');
-  cta.href = './triage.html';
+  cta.href = getMotifEntryHref(activePage);
   cta.className = 'btn btn-primary nav-cta nav-cta--desktop';
   cta.id = 'nav-cta-primary';
   cta.textContent = 'Initier ma consultation discrète';
@@ -202,18 +208,18 @@ export const createFooter = () => {
   const col1 = document.createElement('div');
   col1.className = 'footer-col';
   const h3 = document.createElement('h3');
-  h3.textContent = 'MedLink Butembo';
+  h3.textContent = APP_NAME;
   const p1 = document.createElement('p');
-  p1.textContent = 'Réseau hospitalier agréé — Orientation sécurisée et discrète vers les structures partenaires de Butembo.';
+  p1.textContent = APP_TAGLINE;
   col1.appendChild(h3);
   col1.appendChild(p1);
 
   const col2 = document.createElement('div');
   col2.className = 'footer-col';
   const h4 = document.createElement('h4');
-  h4.textContent = 'Structures partenaires';
+  h4.textContent = 'Structure partenaire';
   const ul = document.createElement('ul');
-  ['CH La Colombe — Bulengera', 'HGR Katwa — Mususa', 'Hôpital Matanda — Matanda'].forEach((name) => {
+  ['Centre Hospitalier La Colombe — Bulengera'].forEach((name) => {
     const li = document.createElement('li');
     li.textContent = name;
     ul.appendChild(li);
@@ -228,7 +234,7 @@ export const createFooter = () => {
   badge.textContent = 'Phase Pilote — Accès 100% Gratuit';
   const copy = document.createElement('p');
   copy.className = 'footer-copy';
-  copy.textContent = '© 2026 MedLink Butembo. Service entièrement gratuit et libre d\'accès.';
+  copy.textContent = `© 2026 ${APP_NAME}. Service entièrement gratuit et libre d'accès.`;
   col3.appendChild(badge);
   col3.appendChild(copy);
 
@@ -240,10 +246,9 @@ export const createFooter = () => {
 };
 
 const FLOW_STEPS = {
-  triage: { current: 1, total: 5, label: 'Questionnaire' },
-  hospitals: { current: 2, total: 5, label: 'Choix de la structure' },
-  consultation: { current: 3, total: 5, label: 'Qualification' },
-  confirmation: { current: 4, total: 5, label: 'Confirmation' }
+  triage: { current: 2, total: 4, label: 'Consultation guidée' },
+  consultation: { current: 3, total: 4, label: 'Consultation' },
+  confirmation: { current: 4, total: 4, label: 'Confirmation' }
 };
 
 export const createStepIndicator = (activePage) => {
