@@ -14,13 +14,6 @@ export const INSTITUTION = {
   phone_display: '+243 840 344 307'
 };
 
-export const INSTITUTION_IMAGES = {
-  hero:
-    'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=900&h=420&fit=crop&q=80',
-  anchorage:
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=720&h=480&fit=crop&q=80'
-};
-
 export const HOME_MARQUEE_ITEMS = [
   'HGR Katwa — Butembo, Nord-Kivu',
   'Urgences 24h/24',
@@ -30,6 +23,39 @@ export const HOME_MARQUEE_ITEMS = [
   'Établissement public hospitalier',
   'Laboratoire & diagnostic',
   'Accueil des usagers'
+];
+
+export const HOME_QUICK_ACCESS = [
+  { label: 'Urgences 24h/24', hint: 'Présentez-vous au pavillon urgences', href: './infos-pratiques.html#infos-hours' },
+  { label: 'Maternité', hint: 'Suivi grossesse & accouchements', href: './services.html#service-maternite' },
+  { label: 'Banque de sang', hint: 'Prélèvements & transfusion', href: './services.html#service-transfusion' },
+  { label: 'Rendez-vous', hint: 'Demande en ligne', href: './rendez-vous.html' }
+];
+
+export const HOME_ESSENTIALS = [
+  'Urgence vitale : venez directement aux urgences — pas besoin de rendez-vous.',
+  'Consultation programmée : privilégiez la prise de rendez-vous pour réduire l\'attente.',
+  'Documents : pièce d\'identité, carnet de santé et ordonnances en cours si possible.',
+  'Accompagnant : respect des horaires de visite affichés dans chaque unité.'
+];
+
+export const HOME_FAQ = [
+  {
+    question: 'Où se trouve le HGR Katwa ?',
+    answer: 'Quartier Bwinongo, Commune Mususa, Butembo — axe Marché de Katwa, sud-est du centre-ville.'
+  },
+  {
+    question: 'Les urgences sont-elles ouvertes la nuit ?',
+    answer: 'Oui. Le service des urgences accueille les patients 24h/24 et 7j/7.'
+  },
+  {
+    question: 'Comment prendre rendez-vous ?',
+    answer: 'Via le formulaire en ligne (envoi WhatsApp) ou à l\'accueil administratif en semaine, 8h–15h.'
+  },
+  {
+    question: 'Quels services sont disponibles sur place ?',
+    answer: 'Maternité de référence, chirurgie, pédiatrie, laboratoire, banque de sang et consultations générales.'
+  }
 ];
 
 export const DIRECTOR_MESSAGE = {

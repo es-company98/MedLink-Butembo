@@ -1,27 +1,16 @@
 import {
   CLINICAL_SERVICES,
   INSTITUTION,
-  INSTITUTION_IMAGES,
   HOME_MARQUEE_ITEMS,
+  HOME_QUICK_ACCESS,
+  HOME_ESSENTIALS,
+  HOME_FAQ,
   HOME_PILLARS,
   HOME_COMMITMENTS,
   MEDICAL_TEAM,
   PRACTICAL_INFO
 } from './hgr-katwa-data.js';
 import { APP_RDV_HREF } from './app-config.js';
-import { createImageWithFallback, createImageFallback } from './ui.js';
-
-const mountImage = (containerId, src, alt, width, height, eager = false) => {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.replaceChildren();
-  const img = createImageWithFallback(src, alt, width, height, 'institution-photo');
-  if (eager) img.loading = 'eager';
-  const fallback = createImageFallback('HGR Katwa — Butembo');
-  fallback.classList.add('institution-photo-fallback');
-  container.appendChild(img);
-  container.appendChild(fallback);
-};
 
 const renderMarquee = () => {
   const track = document.getElementById('marquee-track');
@@ -223,29 +212,90 @@ const renderCommitments = () => {
   container.replaceChildren(fragment);
 };
 
+const renderQuickAccess = () => {
+  const container = document.getElementById('home-quick-access-grid');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  HOME_QUICK_ACCESS.forEach((item, index) => {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.className = 'home-quick-access-item';
+    a.id = `home-quick-access-${index + 1}`;
+
+    const label = document.createElement('span');
+    label.className = 'home-quick-access-label';
+    label.textContent = item.label;
+
+    const hint = document.createElement('span');
+    hint.className = 'home-quick-access-hint';
+    hint.textContent = item.hint;
+
+    a.appendChild(label);
+    a.appendChild(hint);
+    fragment.appendChild(a);
+  });
+  container.replaceChildren(fragment);
+};
+
+const renderEssentials = () => {
+  const list = document.getElementById('home-essentials-list');
+  if (!list) return;
+
+  const fragment = document.createDocumentFragment();
+  HOME_ESSENTIALS.forEach((text, index) => {
+    const li = document.createElement('li');
+    li.id = `home-essential-${index + 1}`;
+    li.textContent = text;
+    fragment.appendChild(li);
+  });
+  list.replaceChildren(fragment);
+};
+
+const renderLocationCard = () => {
+  const address = document.getElementById('home-location-address');
+  const hint = document.getElementById('home-location-hint');
+  const phone = document.getElementById('home-location-phone');
+  if (address) address.textContent = INSTITUTION.address;
+  if (hint) hint.textContent = INSTITUTION.access_hint;
+  if (phone) phone.textContent = INSTITUTION.phone_display;
+};
+
+const renderFaq = () => {
+  const container = document.getElementById('home-faq-list');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  HOME_FAQ.forEach((item, index) => {
+    const details = document.createElement('details');
+    details.className = 'home-faq-item';
+    details.id = `home-faq-${index + 1}`;
+
+    const summary = document.createElement('summary');
+    summary.textContent = item.question;
+
+    const p = document.createElement('p');
+    p.textContent = item.answer;
+
+    details.appendChild(summary);
+    details.appendChild(p);
+    fragment.appendChild(details);
+  });
+  container.replaceChildren(fragment);
+};
+
 const initIndex = () => {
-  mountImage(
-    'hero-visual',
-    INSTITUTION_IMAGES.hero,
-    'Hôpital Général de Référence de Katwa — Butembo, Nord-Kivu',
-    900,
-    420,
-    true
-  );
-  mountImage(
-    'home-anchorage-visual',
-    INSTITUTION_IMAGES.anchorage,
-    'Soins hospitaliers — HGR Katwa, Commune Mususa, Butembo',
-    720,
-    480
-  );
   renderMarquee();
+  renderQuickAccess();
   renderServicePreview();
+  renderEssentials();
   renderPatientPath();
   renderPillars();
   renderTeamTeaser();
   renderPracticalPreview();
   renderCommitments();
+  renderLocationCard();
+  renderFaq();
 
   const emergency = document.getElementById('home-emergency-phone');
   if (emergency) {
