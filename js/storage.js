@@ -121,7 +121,7 @@ export const generateDossierId = () => {
 
 export const buildWhatsAppMessage = (data) => {
   const lines = [
-    '📋 *DOSSIER MEDLINK BUTEMBO*',
+    '📋 *DOSSIER HGR KATWA*',
     `🔖 Référence : #${data.dossier_id}`,
     `📅 Date : ${new Date(data.date || Date.now()).toLocaleString('fr-FR')}`,
     '',
@@ -140,7 +140,7 @@ export const buildWhatsAppMessage = (data) => {
     `Tranche d'âge : ${data.tranche_age || 'Non précisée'}`,
     `Mode de consultation : ${getConsultationModeLabel(data.mode_consultation)}`,
     '',
-    '— Transmis via Centre Hospitalier La Colombe (Phase Pilote)'
+    '— Transmis via Hôpital Général de Référence de Katwa (orientation à distance — option)'
   ];
   return lines.join('\n');
 };

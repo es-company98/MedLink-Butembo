@@ -1,64 +1,29 @@
-# MedLink Butembo
+# Hôpital Général de Référence de Katwa — Site institutionnel
 
-Plateforme de questionnaire médical confidentiel connectant les patients au réseau hospitalier agréé de Butembo (RDC).
+Site web patient et institutionnel pour le **HGR Katwa** (Butembo, Nord-Kivu, RDC). Front-end statique (HTML, CSS, JavaScript ES Modules), sans base de données.
 
-## Phase pilote
+## Arborescence
 
-- Accès 100 % gratuit
-- 3 structures partenaires : CH La Colombe, HGR Katwa, Hôpital de Matanda
-- Transmission du dossier vers la garde hospitalière via WhatsApp
+| Page | Rôle |
+|------|------|
+| `index.html` | Accueil institutionnel |
+| `presentation.html` | Présentation, mot de la direction, ancrage Katwa |
+| `services.html` | Grille des services cliniques |
+| `equipe.html` | Équipe médicale et responsables de service |
+| `infos-pratiques.html` | Horaires, accès, visites, documents |
+| `rendez-vous.html` | Formulaire RDV / renseignements (WhatsApp) |
+| `partenaires.html` | Espace B2B (lien discret en pied de page) |
+| `triage.html` | Orientation à distance **optionnelle** (lien depuis un service) |
 
-## Parcours utilisateur
+## Données
 
-1. **Accueil** — découverte du réseau
-2. **Questionnaire** — triage guidé (catégorie, symptômes, urgence)
-3. **Hôpitaux** — choix de la structure (recommandation selon le profil)
-4. **Qualification** — pseudonyme et tranche d'âge (facultatifs)
-5. **Confirmation** — bulletin `#MLB-YYYYMMDD-XXXX` + envoi WhatsApp
+- `js/hgr-katwa-data.js` — institution, services, équipe, infos pratiques
+- `js/app-config.js` — identité et contact
 
-## Stack
+## Lancement local
 
-- HTML / CSS / JavaScript (ES Modules)
-- Aucun backend — persistance `localStorage`
-- Hébergement statique (GitHub Pages)
+Servir le dossier en HTTP statique (ex. `npx serve .`).
 
-## Déploiement GitHub Pages
+## Contact usager (WhatsApp)
 
-1. Repo : [github.com/es-company98/MedLink-Butembo](https://github.com/es-company98/MedLink-Butembo)
-2. **Settings → Pages → Source** : Deploy from branch `main`, folder `/ (root)`
-3. URL live : `https://es-company98.github.io/MedLink-Butembo/`
-
-## Développement local
-
-Ouvrir `index.html` via un serveur local (ex. extension Live Server) — les modules ES nécessitent HTTP.
-
-```bash
-npx serve .
-```
-
-## Structure
-
-```
-├── index.html          # Landing
-├── triage.html         # Questionnaire
-├── hospitals.html      # Choix structure
-├── consultation.html   # Qualification dossier
-├── confirmation.html   # Bulletin + WhatsApp
-├── css/style.css
-└── js/
-    ├── app.js          # Init globale
-    ├── ui.js           # Nav, footer, étapes
-    ├── storage.js      # localStorage + message WhatsApp
-    ├── hospitals-data.js
-    └── ...
-```
-
-## Numéros WhatsApp (phase pilote)
-
-| Structure | Numéro |
-|-----------|--------|
-| CH La Colombe | +243 979 692 582 |
-| HGR Katwa | +243 840 344 307 |
-| Hôpital Matanda | +243 843 858 955 |
-
-*À valider officiellement avec chaque établissement avant mise en production.*
+Ligne information / RDV : **+243 840 344 307** (`243840344307`)

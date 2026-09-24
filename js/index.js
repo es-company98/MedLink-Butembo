@@ -1,98 +1,259 @@
-import { TRIAGE_CATEGORIES } from './triage-questions.js';
-import { saveMedlinkData, clearMedlinkData } from './storage.js';
+import {
+  CLINICAL_SERVICES,
+  INSTITUTION,
+  INSTITUTION_IMAGES,
+  HOME_MARQUEE_ITEMS,
+  HOME_PILLARS,
+  HOME_COMMITMENTS,
+  MEDICAL_TEAM,
+  PRACTICAL_INFO
+} from './hgr-katwa-data.js';
+import { APP_RDV_HREF } from './app-config.js';
+import { createImageWithFallback, createImageFallback } from './ui.js';
 
-const startQuickTriage = (category) => {
-  clearMedlinkData();
-  saveMedlinkData({
-    categorie: category.label,
-    date: new Date().toISOString(),
-    symptomes: [],
-    urgence: ''
-  });
-  window.location.assign('./triage.html');
+const mountImage = (containerId, src, alt, width, height, eager = false) => {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.replaceChildren();
+  const img = createImageWithFallback(src, alt, width, height, 'institution-photo');
+  if (eager) img.loading = 'eager';
+  const fallback = createImageFallback('HGR Katwa — Butembo');
+  fallback.classList.add('institution-photo-fallback');
+  container.appendChild(img);
+  container.appendChild(fallback);
 };
 
-const renderQuickTriage = () => {
-  const container = document.getElementById('quick-triage-grid');
+const renderMarquee = () => {
+  const track = document.getElementById('marquee-track');
+  if (!track) return;
+
+  const items = [...HOME_MARQUEE_ITEMS, ...HOME_MARQUEE_ITEMS];
+  const fragment = document.createDocumentFragment();
+  items.forEach((text, index) => {
+    const span = document.createElement('span');
+    span.className = 'marquee-item';
+    span.id = `marquee-item-${index % HOME_MARQUEE_ITEMS.length}`;
+    span.textContent = text;
+    fragment.appendChild(span);
+  });
+  track.replaceChildren(fragment);
+};
+
+const renderServicePreview = () => {
+  const container = document.getElementById('home-services-preview');
   if (!container) return;
 
+  const preview = CLINICAL_SERVICES.filter((s) => !s.teleconsultation).slice(0, 6);
   const fragment = document.createDocumentFragment();
-  TRIAGE_CATEGORIES.forEach((cat) => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'quick-triage-card card-3d';
-    card.id = `quick-triage-${cat.id}`;
 
-    const title = document.createElement('span');
-    title.className = 'quick-triage-title';
-    title.textContent = cat.label;
+  preview.forEach((service) => {
+    const article = document.createElement('article');
+    article.className = 'institution-card';
 
-    const desc = document.createElement('span');
-    desc.className = 'quick-triage-desc';
-    desc.textContent = cat.description;
+    const badge = document.createElement('span');
+    badge.className = 'institution-badge';
+    badge.textContent = service.icon_label;
 
-    card.appendChild(title);
-    card.appendChild(desc);
-    card.addEventListener('click', () => startQuickTriage(cat));
-    fragment.appendChild(card);
+    const h3 = document.createElement('h3');
+    h3.textContent = service.name;
+
+    const p = document.createElement('p');
+    p.textContent = service.summary;
+
+    article.appendChild(badge);
+    article.appendChild(h3);
+    article.appendChild(p);
+    fragment.appendChild(article);
   });
 
   container.replaceChildren(fragment);
 };
 
-const MOBILE_HOSPITAL_BREAKPOINT = 680;
+const renderPatientPath = () => {
+  const list = document.getElementById('home-patient-path');
+  if (!list) return;
 
-const isMobileHospitalPreview = () =>
-  window.matchMedia(`(max-width: ${MOBILE_HOSPITAL_BREAKPOINT}px)`).matches;
+  const steps = [
+    'Consultez les services et infos pratiques',
+    'Prenez rendez-vous ou demandez des renseignements en ligne',
+    'Présentez-vous à l\'accueil du HGR Katwa avec vos documents',
+    'Suivez les consignes du service qui vous accueille'
+  ];
 
-const setHospitalPreviewExpanded = (card, expanded) => {
-  const toggle = card.querySelector('.hospital-preview-toggle');
-  const toggleText = toggle?.querySelector('.hospital-preview-toggle-text');
-  card.classList.toggle('is-expanded', expanded);
-  if (toggle) toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-  if (toggleText) {
-    toggleText.textContent = expanded ? 'Masquer les détails' : 'Voir les détails';
-  }
+  const fragment = document.createDocumentFragment();
+  steps.forEach((text, index) => {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = `Étape ${index + 1}. `;
+    li.appendChild(strong);
+    li.appendChild(document.createTextNode(text));
+    fragment.appendChild(li);
+  });
+  list.replaceChildren(fragment);
 };
 
-const closeAllHospitalPreviews = (exceptCard = null) => {
-  document.querySelectorAll('.hospital-preview-card').forEach((card) => {
-    if (card === exceptCard) return;
-    setHospitalPreviewExpanded(card, false);
+const renderPillars = () => {
+  const container = document.getElementById('home-pillars-grid');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  HOME_PILLARS.forEach((pillar) => {
+    const article = document.createElement('article');
+    article.className = 'institution-card institution-card--pillar';
+    article.id = `home-pillar-${pillar.pillar_id}`;
+
+    const h3 = document.createElement('h3');
+    h3.textContent = pillar.title;
+
+    const p = document.createElement('p');
+    p.textContent = pillar.text;
+
+    article.appendChild(h3);
+    article.appendChild(p);
+    fragment.appendChild(article);
   });
+  container.replaceChildren(fragment);
 };
 
-const initHospitalPreviewAccordion = () => {
-  const cards = document.querySelectorAll('#hospitals-preview-grid .hospital-preview-card');
-  if (!cards.length) return;
+const renderTeamTeaser = () => {
+  const container = document.getElementById('home-team-preview');
+  if (!container) return;
 
-  cards.forEach((card) => {
-    const toggle = card.querySelector('.hospital-preview-toggle');
-    if (!toggle) return;
+  const teaser = MEDICAL_TEAM.slice(0, 3);
+  const fragment = document.createDocumentFragment();
 
-    toggle.addEventListener('click', () => {
-      if (!isMobileHospitalPreview()) return;
+  teaser.forEach((member) => {
+    const article = document.createElement('article');
+    article.className = 'institution-card institution-card--team-teaser';
 
-      const isOpen = card.classList.contains('is-expanded');
-      if (isOpen) {
-        setHospitalPreviewExpanded(card, false);
-        return;
-      }
+    const h3 = document.createElement('h3');
+    h3.textContent = member.name;
 
-      closeAllHospitalPreviews(card);
-      setHospitalPreviewExpanded(card, true);
-    });
+    const role = document.createElement('p');
+    role.className = 'team-card-role';
+    role.textContent = member.role;
+
+    const dept = document.createElement('p');
+    dept.className = 'team-card-dept';
+    dept.textContent = member.department;
+
+    article.appendChild(h3);
+    article.appendChild(role);
+    article.appendChild(dept);
+    fragment.appendChild(article);
   });
 
-  const mobileQuery = window.matchMedia(`(max-width: ${MOBILE_HOSPITAL_BREAKPOINT}px)`);
-  mobileQuery.addEventListener('change', () => {
-    closeAllHospitalPreviews();
+  container.replaceChildren(fragment);
+};
+
+const renderPracticalPreview = () => {
+  const container = document.getElementById('home-practical-grid');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+
+  const hoursCard = document.createElement('article');
+  hoursCard.className = 'institution-card';
+  const hoursTitle = document.createElement('h3');
+  hoursTitle.textContent = 'Horaires';
+  hoursCard.appendChild(hoursTitle);
+  const hoursList = document.createElement('ul');
+  PRACTICAL_INFO.hours.forEach(({ label, value }) => {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = `${label} : `;
+    li.appendChild(strong);
+    li.appendChild(document.createTextNode(value));
+    hoursList.appendChild(li);
   });
+  hoursCard.appendChild(hoursList);
+  fragment.appendChild(hoursCard);
+
+  const accessCard = document.createElement('article');
+  accessCard.className = 'institution-card';
+  const accessTitle = document.createElement('h3');
+  accessTitle.textContent = 'Accès';
+  accessCard.appendChild(accessTitle);
+  const accessList = document.createElement('ul');
+  PRACTICAL_INFO.access.forEach((line) => {
+    const li = document.createElement('li');
+    li.textContent = line;
+    accessList.appendChild(li);
+  });
+  accessCard.appendChild(accessList);
+  fragment.appendChild(accessCard);
+
+  const docsCard = document.createElement('article');
+  docsCard.className = 'institution-card';
+  const docsTitle = document.createElement('h3');
+  docsTitle.textContent = 'Documents recommandés';
+  docsCard.appendChild(docsTitle);
+  const docsList = document.createElement('ul');
+  PRACTICAL_INFO.documents.forEach((line) => {
+    const li = document.createElement('li');
+    li.textContent = line;
+    docsList.appendChild(li);
+  });
+  docsCard.appendChild(docsList);
+  fragment.appendChild(docsCard);
+
+  container.replaceChildren(fragment);
+};
+
+const renderCommitments = () => {
+  const container = document.getElementById('home-commitments-grid');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  HOME_COMMITMENTS.forEach((item, index) => {
+    const article = document.createElement('article');
+    article.className = 'institution-card institution-card--commitment';
+    article.id = `home-commitment-${index + 1}`;
+
+    const h3 = document.createElement('h3');
+    h3.textContent = item.title;
+
+    const p = document.createElement('p');
+    p.textContent = item.text;
+
+    article.appendChild(h3);
+    article.appendChild(p);
+    fragment.appendChild(article);
+  });
+  container.replaceChildren(fragment);
 };
 
 const initIndex = () => {
-  renderQuickTriage();
-  initHospitalPreviewAccordion();
+  mountImage(
+    'hero-visual',
+    INSTITUTION_IMAGES.hero,
+    'Hôpital Général de Référence de Katwa — Butembo, Nord-Kivu',
+    900,
+    420,
+    true
+  );
+  mountImage(
+    'home-anchorage-visual',
+    INSTITUTION_IMAGES.anchorage,
+    'Soins hospitaliers — HGR Katwa, Commune Mususa, Butembo',
+    720,
+    480
+  );
+  renderMarquee();
+  renderServicePreview();
+  renderPatientPath();
+  renderPillars();
+  renderTeamTeaser();
+  renderPracticalPreview();
+  renderCommitments();
+
+  const emergency = document.getElementById('home-emergency-phone');
+  if (emergency) {
+    emergency.textContent = INSTITUTION.phone_display;
+  }
+
+  const cta = document.getElementById('hero-cta-primary');
+  if (cta) cta.href = APP_RDV_HREF;
 };
 
 if (document.body.dataset.page === 'index') {

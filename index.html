@@ -5,31 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
   <meta name="referrer" content="no-referrer">
-  <title>Centre Hospitalier La Colombe — Orientation médicale discrète & accès direct aux soins</title>
-  <meta name="description" content="Plateforme de consultation médicale confidentielle du Centre Hospitalier La Colombe à Butembo. Discrétion garantie, orientation sécurisée, accès 100% gratuit.">
-  <meta name="keywords" content="Centre Hospitalier La Colombe, consultation discrète, consultation médicale, hôpital Butembo, orientation santé, symptômes">
+  <title>HGR Katwa — Hôpital Général de Référence de Katwa, Butembo</title>
+  <meta name="description" content="Site institutionnel de l'Hôpital Général de Référence de Katwa à Butembo, Nord-Kivu. Services cliniques, équipe médicale, infos pratiques et prise de rendez-vous.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="./index.html">
-  <meta property="og:title" content="Centre Hospitalier La Colombe — La médecine de pointe, connectée à votre discrétion">
-  <meta property="og:description" content="Orientation médicale vers le réseau hospitalier agréé de Butembo. Dossier confidentiel, sans attente inutile.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=630&fit=crop">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="./index.html">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Centre Hospitalier La Colombe — Orientation médicale discrète">
-  <meta name="twitter:description" content="Accès direct aux soins via un réseau hospitalier agréé. Phase pilote 100% gratuite.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css?v=20250906-1">
+  <link rel="stylesheet" href="./css/style.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "MedicalOrganization",
-    "name": "Centre Hospitalier La Colombe",
-    "description": "Centre hospitalier moderne à Butembo — consultation médicale confidentielle et orientation vers les soins.",
-    "areaServed": { "@type": "City", "name": "Butembo" },
-    "medicalSpecialty": ["Consultation générale", "Urgences", "Maternité", "Neurochirurgie"]
+    "@type": "Hospital",
+    "name": "Hôpital Général de Référence de Katwa",
+    "description": "Établissement public hospitalier de référence à Butembo, Nord-Kivu.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Butembo",
+      "addressRegion": "Nord-Kivu",
+      "addressCountry": "CD"
+    },
+    "medicalSpecialty": ["Urgences", "Maternité", "Chirurgie", "Pédiatrie"]
   }
   </script>
 </head>
@@ -37,138 +33,117 @@
   <div id="nav-slot"></div>
 
   <main id="main-content">
-    <section class="hero" id="hero-section">
-      <div class="hero-content">
-        <span class="hero-badge" id="hero-badge">Phase Pilote — Accès 100% Gratuit</span>
-        <h1 id="hero-title">La médecine de pointe, connectée à votre <em>discrétion</em>.</h1>
-        <p class="hero-subtitle" id="hero-subtitle">Orientation sécurisée vers le réseau hospitalier agréé de Butembo. Dossier confidentiel, prise en charge fluide — sans attente inutile dans les couloirs.</p>
+    <section class="institution-hero" id="hero-section">
+      <div class="institution-hero-content">
+        <span class="institution-hero-badge" id="hero-badge">Institution publique — Nord-Kivu</span>
+        <h1 id="hero-title">Hôpital Général de Référence de <em>Katwa</em></h1>
+        <p class="institution-hero-subtitle" id="hero-subtitle">
+          Soins de référence à Butembo : maternité, urgences 24h/24 et plateau clinique au service des patients et des familles.
+        </p>
         <div class="hero-cta-group" id="hero-cta">
-          <a href="#quick-triage-section" class="btn btn-primary" id="hero-cta-primary">Initier ma consultation discrète</a>
-          <a href="./hospitals.html" class="btn btn-secondary" id="hero-cta-secondary">Découvrir La Colombe</a>
+          <a href="./rendez-vous.html" class="btn btn-primary" id="hero-cta-primary">Prendre rendez-vous / Demande de renseignements</a>
+          <a href="./services.html" class="btn btn-secondary" id="hero-cta-secondary">Découvrir nos services</a>
         </div>
       </div>
-      <div class="hero-visual" id="hero-visual">
-        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=300&fit=crop" alt="Professionnel de santé en consultation discrète — Centre Hospitalier La Colombe" width="800" height="300" loading="eager">
-      </div>
+      <div class="institution-hero-visual" id="hero-visual"></div>
     </section>
 
-    <section class="marquee-section" id="marquee-section" aria-label="Badges de réassurance">
-      <div class="marquee-track" id="marquee-track">
-        <span class="marquee-item">Discrétion garantie</span>
-        <span class="marquee-item">Réseau hospitalier agréé</span>
-        <span class="marquee-item">Dossier confidentiel</span>
-        <span class="marquee-item">Orientation sécurisée</span>
-        <span class="marquee-item">Expertise médicale locale</span>
-        <span class="marquee-item">Accès direct aux soins</span>
-        <span class="marquee-item">Prise en charge fluide</span>
-        <span class="marquee-item">Service 100% gratuit</span>
-        <span class="marquee-item">Discrétion garantie</span>
-        <span class="marquee-item">Réseau hospitalier agréé</span>
-        <span class="marquee-item">Dossier confidentiel</span>
-        <span class="marquee-item">Orientation sécurisée</span>
-        <span class="marquee-item">Expertise médicale locale</span>
-        <span class="marquee-item">Accès direct aux soins</span>
-        <span class="marquee-item">Prise en charge fluide</span>
-        <span class="marquee-item">Service 100% gratuit</span>
-      </div>
+    <section class="institution-strip" aria-label="Points clés">
+      <ul class="institution-strip-list" id="institution-strip">
+        <li>Urgences ouvertes 24h/24</li>
+        <li>Maternité de référence</li>
+        <li>Commune Mususa — Bwinongo</li>
+        <li>Accueil patient &amp; usagers</li>
+      </ul>
     </section>
 
-    <section class="section" id="quick-triage-section">
+    <section class="marquee-section" id="marquee-section" aria-label="Messages institutionnels défilants">
+      <div class="marquee-track" id="marquee-track"></div>
+    </section>
+
+    <section class="section" id="home-services-section">
       <div class="section-header">
-        <h2 id="quick-triage-title">Quel est votre motif de consultation ?</h2>
-        <p id="quick-triage-desc">Choisissez votre motif pour démarrer votre consultation — sans re-sélection sur la page suivante.</p>
+        <h2 id="home-services-title">Nos services cliniques</h2>
+        <p id="home-services-desc">Un plateau hospitalier complet pour la population de Butembo et de la région.</p>
       </div>
-      <div class="quick-triage-grid" id="quick-triage-grid"></div>
+      <div class="institution-grid" id="home-services-preview"></div>
+      <p class="section-cta-wrap">
+        <a href="./services.html" class="btn btn-secondary" id="home-services-link">Voir la grille complète des services</a>
+      </p>
     </section>
 
-    <section class="section" id="steps-section">
+    <section class="section institution-section-alt" id="home-patient-section">
       <div class="section-header">
-        <h2 id="steps-title">Votre parcours en 4 étapes</h2>
-        <p id="steps-desc">Du motif à la transmission de votre dossier — simple, rapide et confidentiel.</p>
+        <h2 id="home-patient-title">Votre parcours patient</h2>
+        <p id="home-patient-desc">Simple, lisible et pensé pour mobile — de l'information à la prise en charge sur site.</p>
       </div>
-      <div class="steps-grid" id="steps-grid">
-        <article class="step-card card-3d" id="step-1">
-          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&h=160&fit=crop" alt="Choix du motif de consultation" width="400" height="160" loading="lazy">
-          <div class="step-number">1</div>
-          <h3>Motif</h3>
-          <p>Choisissez votre motif sur l'accueil — urgence, maternité, consultation générale ou santé intime.</p>
-        </article>
-        <article class="step-card card-3d" id="step-2">
-          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=160&fit=crop" alt="Consultation médicale — symptômes et urgence" width="400" height="160" loading="lazy">
-          <div class="step-number">2</div>
-          <h3>Symptômes &amp; urgence</h3>
-          <p>Décrivez votre situation et le degré d'urgence perçu, puis choisissez votre médecin.</p>
-        </article>
-        <article class="step-card card-3d" id="step-3">
-          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=160&fit=crop" alt="Consultation du dossier patient" width="400" height="160" loading="lazy">
-          <div class="step-number">3</div>
-          <h3>Consultation</h3>
-          <p>Récapitulatif de votre dossier. Pseudonyme facultatif pour préserver votre anonymat.</p>
-        </article>
-        <article class="step-card card-3d" id="step-4">
-          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=160&fit=crop" alt="Confirmation et transmission WhatsApp" width="400" height="160" loading="lazy">
-          <div class="step-number">4</div>
-          <h3>Confirmation</h3>
-          <p>Validation finale et envoi WhatsApp vers le médecin choisi.</p>
-        </article>
-      </div>
+      <ol class="institution-path-list" id="home-patient-path"></ol>
     </section>
 
-    <section class="section section-hospitals" id="hospitals-preview-section">
-      <div class="section-header">
-        <h2 id="hospitals-preview-title">Centre Hospitalier La Colombe</h2>
-        <p id="hospitals-preview-desc">Structure partenaire à Butembo, Nord-Kivu — plateau technique complet et prise en charge discrète.</p>
-      </div>
-      <div class="hospitals-preview" id="hospitals-preview-grid">
-
-        <article class="hospital-preview-card card-3d" id="hospital-preview-lacolombe" style="--hospital-accent: #3d7a6a;">
-          <div class="hospital-preview-image">
-            <img
-              src="https://i0.wp.com/rtvh.net/wp-content/uploads/2025/11/CH-LA-COLOMBE.jpg?w=1080&amp;ssl=1"
-              alt="Centre Hospitalier La Colombe — Cellule Kaghondo, Bulengera, Butembo, Nord-Kivu"
-              width="800"
-              height="220"
-              loading="lazy"
-            >
-          </div>
-          <div class="hospital-preview-body">
-            <span class="hospital-preview-badge">Pôle Diagnostic &amp; Équipements Spécialisés — Kaghondo</span>
-            <h3 id="hospital-preview-title-lacolombe">Centre Hospitalier La Colombe</h3>
-            <p class="hospital-preview-location">Bulengera — Kaghondo · Butembo, Nord-Kivu</p>
-            <p class="hospital-preview-desc" id="hospital-preview-desc-lacolombe">Structure sanitaire moderne ouverte à Butembo en juillet 2025. Plus de 60 lits d'accueil : médecine interne, pédiatrie, chirurgie, gynéco-obstétrique, dentisterie et maternité. Plateau technique complet — électrocardiogramme, dentisterie, moniteurs de surveillance, mobiliseur et laboratoire d'analyses. Trois médecins généralistes permanents et des spécialistes par département.</p>
-            <button type="button" class="hospital-preview-toggle" id="hospital-preview-toggle-lacolombe" aria-expanded="false" aria-controls="hospital-preview-panel-lacolombe">
-              <span class="hospital-preview-toggle-text">Voir les détails</span>
-              <span class="hospital-preview-toggle-chevron" aria-hidden="true"></span>
-            </button>
-            <div class="hospital-preview-panel" id="hospital-preview-panel-lacolombe">
-            <ul class="hospital-preview-specialites" aria-label="Spécialités du Centre Hospitalier La Colombe">
-              <li>Consultations spécialisées</li>
-              <li>Examens cardiologiques et dentaires</li>
-              <li>Diagnostic biologique rapide</li>
-              <li>Prise en charge discrète</li>
-            </ul>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <section class="section" id="value-section">
-      <div class="value-grid">
-        <div id="value-visual">
-          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop" alt="Équipe médicale professionnelle — réseau Butembo" width="600" height="400" loading="lazy" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-3d);">
+    <section class="section" id="home-anchorage-section">
+      <div class="institution-split institution-split--home">
+        <div class="institution-split-text">
+          <h2 id="home-anchorage-title">Un hôpital ancré à Katwa, au service du Nord-Kivu</h2>
+          <p id="home-anchorage-p1">L'Hôpital Général de Référence de Katwa est une institution publique reconnue à Butembo. Depuis Bwinongo, il concentre des missions de référence — maternité, urgences, chirurgie et transfusion — pour les familles de la ville et de la région.</p>
+          <p id="home-anchorage-p2">Notre priorité est un parcours patient compréhensible : savoir où aller, quels documents apporter et comment être orienté vers le bon pavillon dès votre arrivée.</p>
+          <a href="./presentation.html" class="btn btn-secondary" id="home-anchorage-link">Lire la présentation &amp; le mot de la direction</a>
         </div>
-        <div id="value-content">
-          <h2 id="value-title">Pourquoi Centre Hospitalier La Colombe ?</h2>
-          <ul class="value-list" id="value-list">
-            <li><strong>Certitude :</strong> Consultation de vos symptômes et orientation vers des structures agréées.</li>
-            <li><strong>Rapidité :</strong> Parcours fluide — sans attente inutile dans les couloirs.</li>
-            <li><strong>Discrétion :</strong> Dossier confidentiel, anonymat préservé si vous le souhaitez.</li>
-            <li><strong>Gratuité :</strong> Service 100% gratuit durant la phase pilote.</li>
-          </ul>
-          <a href="#quick-triage-section" class="btn btn-primary" id="value-cta" style="margin-top: 1.5rem;">Initier ma consultation discrète</a>
-        </div>
+        <div class="institution-split-visual" id="home-anchorage-visual"></div>
+      </div>
+    </section>
+
+    <section class="section institution-section-alt" id="home-pillars-section">
+      <div class="section-header">
+        <h2 id="home-pillars-title">Nos pôles de référence</h2>
+        <p id="home-pillars-desc">Des unités structurantes pour la prise en charge des situations sensibles — sur place, sans détour inutile.</p>
+      </div>
+      <div class="institution-grid institution-grid--pillars" id="home-pillars-grid"></div>
+    </section>
+
+    <section class="section" id="home-team-section">
+      <div class="section-header">
+        <h2 id="home-team-title">Équipe médicale &amp; direction des services</h2>
+        <p id="home-team-desc">Responsables de service et direction clinique — coordination des soins au HGR Katwa.</p>
+      </div>
+      <div class="institution-grid institution-grid--team-teaser" id="home-team-preview"></div>
+      <p class="section-cta-wrap">
+        <a href="./equipe.html" class="btn btn-secondary" id="home-team-link">Voir l'annuaire complet de l'équipe</a>
+      </p>
+    </section>
+
+    <section class="section institution-section-alt" id="home-practical-section">
+      <div class="section-header">
+        <h2 id="home-practical-title">Avant votre venue</h2>
+        <p id="home-practical-desc">Horaires, accès et documents utiles — informations essentielles pour préparer votre visite.</p>
+      </div>
+      <div class="institution-info-grid" id="home-practical-grid"></div>
+      <p class="section-cta-wrap">
+        <a href="./infos-pratiques.html" class="btn btn-secondary" id="home-practical-link">Toutes les infos pratiques</a>
+      </p>
+    </section>
+
+    <section class="section" id="home-commitments-section">
+      <div class="section-header">
+        <h2 id="home-commitments-title">Nos engagements envers les usagers</h2>
+        <p id="home-commitments-desc">Transparence, qualité des soins et respect de chaque patient — au cœur de la mission du HGR Katwa.</p>
+      </div>
+      <div class="institution-grid institution-grid--commitments" id="home-commitments-grid"></div>
+    </section>
+
+    <section class="section" id="home-emergency-section">
+      <div class="institution-emergency-card" id="home-emergency-card">
+        <h2 id="home-emergency-title">Urgence vitale</h2>
+        <p id="home-emergency-desc">En cas d'urgence, présentez-vous directement au service des urgences du HGR Katwa, ouvert en permanence.</p>
+        <p class="institution-emergency-phone">Information : <span id="home-emergency-phone"></span></p>
+        <a href="./infos-pratiques.html" class="btn btn-secondary" id="home-emergency-link">Accès &amp; infos pratiques</a>
+      </div>
+    </section>
+
+    <section class="section institution-cta-band" id="home-final-cta-section">
+      <div class="institution-cta-band-inner">
+        <h2 id="home-final-cta-title">Besoin d'un rendez-vous ou d'un renseignement ?</h2>
+        <p id="home-final-cta-desc">Formulaire en ligne : votre demande est préparée pour envoi via WhatsApp — sans inscription, sans stockage sur ce site.</p>
+        <a href="./rendez-vous.html" class="btn btn-primary" id="home-final-cta-btn">Prendre rendez-vous / Demande de renseignements</a>
       </div>
     </section>
   </main>

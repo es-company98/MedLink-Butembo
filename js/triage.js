@@ -264,7 +264,7 @@ const renderUrgencyStep = () => {
 
   const hint = document.createElement('p');
   hint.className = 'triage-hint';
-  hint.textContent = 'Ce triage complète votre dossier pour le Centre Hospitalier La Colombe.';
+  hint.textContent = 'Ce triage complète votre dossier pour le HGR Katwa.';
   area.appendChild(hint);
 
   const grid = document.createElement('div');
@@ -320,7 +320,7 @@ const renderConfirmStep = () => {
 
   const proof = document.createElement('p');
   proof.className = 'social-proof';
-  proof.textContent = '✓ Dossier prêt — Centre Hospitalier La Colombe';
+  proof.textContent = '✓ Dossier prêt — HGR Katwa';
   area.appendChild(proof);
 
   nextBtn().textContent = 'Continuer vers ma consultation';

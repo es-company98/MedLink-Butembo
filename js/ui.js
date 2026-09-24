@@ -1,4 +1,5 @@
-import { APP_NAME, APP_TAGLINE } from './app-config.js';
+import { APP_NAME, APP_TAGLINE, APP_RDV_HREF } from './app-config.js';
+import { INSTITUTION } from './hgr-katwa-data.js';
 
 export const createImageWithFallback = (src, alt, width, height, className) => {
   const img = document.createElement('img');
@@ -37,19 +38,16 @@ export const createImageFallback = (label) => {
   return div;
 };
 
-export const createHoverTooltip = (triggerEl, text) => {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'hover-tooltip-wrap';
-  const tooltip = document.createElement('div');
-  tooltip.className = 'hover-tooltip';
-  tooltip.setAttribute('role', 'tooltip');
-  tooltip.textContent = text;
-  wrapper.appendChild(triggerEl.cloneNode(true));
-  wrapper.appendChild(tooltip);
-  return wrapper;
-};
-
 const NAV_MOBILE_BREAKPOINT = 768;
+
+const NAV_PAGES = [
+  { href: './index.html', label: 'Accueil', id: 'index' },
+  { href: './presentation.html', label: 'L\'hôpital', id: 'presentation' },
+  { href: './services.html', label: 'Services cliniques', id: 'services' },
+  { href: './equipe.html', label: 'Équipe médicale', id: 'equipe' },
+  { href: './infos-pratiques.html', label: 'Infos pratiques', id: 'infos-pratiques' },
+  { href: './rendez-vous.html', label: 'Rendez-vous', id: 'rendez-vous' }
+];
 
 const setNavMenuOpen = (nav, open) => {
   const toggle = nav.querySelector('.nav-toggle');
@@ -94,21 +92,16 @@ const bindMobileNav = (nav) => {
   });
 };
 
-const getMotifEntryHref = (activePage) =>
-  activePage === 'index' ? '#quick-triage-section' : './index.html#quick-triage-section';
-
-export const createMobileCtaBar = (activePage) => {
-  if (activePage === 'triage') return null;
-
+export const createMobileCtaBar = () => {
   const bar = document.createElement('div');
   bar.className = 'mobile-cta-bar';
   bar.id = 'mobile-cta-bar';
 
   const cta = document.createElement('a');
-  cta.href = getMotifEntryHref(activePage);
+  cta.href = APP_RDV_HREF;
   cta.className = 'btn btn-primary mobile-cta-bar-btn';
   cta.id = 'mobile-cta-primary';
-  cta.textContent = 'Initier ma consultation discrète';
+  cta.textContent = 'Prendre rendez-vous';
 
   bar.appendChild(cta);
   return bar;
@@ -116,14 +109,24 @@ export const createMobileCtaBar = (activePage) => {
 
 export const createNav = (activePage) => {
   const nav = document.createElement('nav');
-  nav.className = 'main-nav';
+  nav.className = 'main-nav main-nav--institutional';
   nav.setAttribute('aria-label', 'Navigation principale');
 
   const brand = document.createElement('a');
   brand.href = './index.html';
   brand.className = 'nav-brand';
-  brand.textContent = APP_NAME;
   brand.title = APP_NAME;
+
+  const brandShort = document.createElement('span');
+  brandShort.className = 'nav-brand-short';
+  brandShort.textContent = 'HGR Katwa';
+
+  const brandFull = document.createElement('span');
+  brandFull.className = 'nav-brand-full';
+  brandFull.textContent = 'Hôpital Général de Référence';
+
+  brand.appendChild(brandShort);
+  brand.appendChild(brandFull);
 
   const toggle = document.createElement('button');
   toggle.type = 'button';
@@ -147,14 +150,7 @@ export const createNav = (activePage) => {
   const links = document.createElement('ul');
   links.className = 'nav-links';
 
-  const pages = [
-    { href: './index.html', label: 'Accueil', id: 'index' },
-    { href: './triage.html', label: 'Consultation discrète', id: 'triage' },
-    { href: './hospitals.html', label: 'Hôpitaux', id: 'hospitals' },
-    { href: './apropos.html', label: 'À propos', id: 'apropos' }
-  ];
-
-  pages.forEach(({ href, label, id }) => {
+  NAV_PAGES.forEach(({ href, label, id }) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
     a.href = href;
@@ -172,15 +168,12 @@ export const createNav = (activePage) => {
   actions.appendChild(links);
 
   const cta = document.createElement('a');
-  cta.href = getMotifEntryHref(activePage);
+  cta.href = APP_RDV_HREF;
   cta.className = 'btn btn-primary nav-cta nav-cta--desktop';
   cta.id = 'nav-cta-primary';
-  cta.textContent = 'Initier ma consultation discrète';
+  cta.textContent = 'Prendre rendez-vous / Demande de renseignements';
 
-  if (activePage !== 'triage') {
-    actions.appendChild(cta);
-  }
-
+  actions.appendChild(cta);
   panel.appendChild(actions);
 
   const backdrop = document.createElement('div');
@@ -199,7 +192,7 @@ export const createNav = (activePage) => {
 
 export const createFooter = () => {
   const footer = document.createElement('footer');
-  footer.className = 'site-footer';
+  footer.className = 'site-footer site-footer--institutional';
   footer.id = 'site-footer';
 
   const inner = document.createElement('div');
@@ -211,17 +204,30 @@ export const createFooter = () => {
   h3.textContent = APP_NAME;
   const p1 = document.createElement('p');
   p1.textContent = APP_TAGLINE;
+  const pLoc = document.createElement('p');
+  pLoc.className = 'footer-location';
+  pLoc.textContent = INSTITUTION.address;
   col1.appendChild(h3);
   col1.appendChild(p1);
+  col1.appendChild(pLoc);
 
   const col2 = document.createElement('div');
   col2.className = 'footer-col';
   const h4 = document.createElement('h4');
-  h4.textContent = 'Structure partenaire';
+  h4.textContent = 'Accès rapide';
   const ul = document.createElement('ul');
-  ['Centre Hospitalier La Colombe — Bulengera'].forEach((name) => {
+  ul.className = 'footer-links';
+  [
+    { href: './services.html', label: 'Services cliniques' },
+    { href: './equipe.html', label: 'Équipe médicale' },
+    { href: './infos-pratiques.html', label: 'Infos pratiques' },
+    { href: './rendez-vous.html', label: 'Rendez-vous' }
+  ].forEach(({ href, label }) => {
     const li = document.createElement('li');
-    li.textContent = name;
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = label;
+    li.appendChild(a);
     ul.appendChild(li);
   });
   col2.appendChild(h4);
@@ -229,26 +235,38 @@ export const createFooter = () => {
 
   const col3 = document.createElement('div');
   col3.className = 'footer-col';
-  const badge = document.createElement('p');
-  badge.className = 'footer-badge';
-  badge.textContent = 'Phase Pilote — Accès 100% Gratuit';
+  const h4b = document.createElement('h4');
+  h4b.textContent = 'Contact usager';
+  const pPhone = document.createElement('p');
+  pPhone.textContent = `Ligne d'information : ${INSTITUTION.phone_display}`;
   const copy = document.createElement('p');
   copy.className = 'footer-copy';
-  copy.textContent = `© 2026 ${APP_NAME}. Service entièrement gratuit et libre d'accès.`;
-  col3.appendChild(badge);
+  copy.textContent = `© ${new Date().getFullYear()} ${INSTITUTION.short_name} — Butembo, Nord-Kivu`;
+  col3.appendChild(h4b);
+  col3.appendChild(pPhone);
   col3.appendChild(copy);
 
   inner.appendChild(col1);
   inner.appendChild(col2);
   inner.appendChild(col3);
   footer.appendChild(inner);
+
+  const b2b = document.createElement('div');
+  b2b.className = 'footer-b2b';
+  const b2bLink = document.createElement('a');
+  b2bLink.href = './partenaires.html';
+  b2bLink.className = 'footer-b2b-link';
+  b2bLink.textContent = 'Partenaires & approvisionnement international';
+  b2b.appendChild(b2bLink);
+  footer.appendChild(b2b);
+
   return footer;
 };
 
 const FLOW_STEPS = {
-  triage: { current: 2, total: 4, label: 'Consultation guidée' },
-  consultation: { current: 3, total: 4, label: 'Consultation' },
-  confirmation: { current: 4, total: 4, label: 'Confirmation' }
+  triage: { current: 1, total: 3, label: 'Orientation à distance (option)' },
+  consultation: { current: 2, total: 3, label: 'Dossier patient' },
+  confirmation: { current: 3, total: 3, label: 'Transmission' }
 };
 
 export const createStepIndicator = (activePage) => {
@@ -256,13 +274,13 @@ export const createStepIndicator = (activePage) => {
   if (!step) return null;
 
   const bar = document.createElement('div');
-  bar.className = 'flow-step-indicator';
+  bar.className = 'flow-step-indicator flow-step-indicator--optional';
   bar.id = 'flow-step-indicator';
   bar.setAttribute('aria-label', `Étape ${step.current} sur ${step.total} — ${step.label}`);
 
   const text = document.createElement('p');
   text.className = 'flow-step-indicator-text';
-  text.textContent = `Étape ${step.current} sur ${step.total} — ${step.label}`;
+  text.textContent = `Service optionnel — ${step.label} (${step.current}/${step.total})`;
 
   const progress = document.createElement('div');
   progress.className = 'flow-step-indicator-bar';
@@ -284,11 +302,14 @@ export const createStepIndicator = (activePage) => {
 export const mountLayout = (activePage) => {
   const navSlot = document.getElementById('nav-slot');
   const footerSlot = document.getElementById('footer-slot');
+  const isTeleconsultFlow = ['triage', 'consultation', 'confirmation'].includes(activePage);
+
   if (navSlot) {
     const fragment = document.createDocumentFragment();
-    fragment.appendChild(createNav(activePage));
-    const mobileCta = createMobileCtaBar(activePage);
-    if (mobileCta) fragment.appendChild(mobileCta);
+    fragment.appendChild(createNav(isTeleconsultFlow ? 'services' : activePage));
+    if (!isTeleconsultFlow) {
+      fragment.appendChild(createMobileCtaBar());
+    }
     const stepIndicator = createStepIndicator(activePage);
     if (stepIndicator) fragment.appendChild(stepIndicator);
     navSlot.replaceChildren(fragment);

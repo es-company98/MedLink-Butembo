@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+  <meta name="referrer" content="no-referrer">
+  <title>Rendez-vous &amp; renseignements — HGR Katwa</title>
+  <meta name="description" content="Formulaire de prise de rendez-vous ou demande de renseignements — Hôpital Général de Référence de Katwa, Butembo.">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+</head>
+<body data-page="rendez-vous">
+  <div id="nav-slot"></div>
+
+  <main id="main-content">
+    <header class="page-header">
+      <h1 id="rdv-title">Prendre rendez-vous / Demande de renseignements</h1>
+      <p id="rdv-intro">Complétez le formulaire ci-dessous. Votre demande sera préparée pour envoi via WhatsApp à l'équipe du HGR Katwa — aucune donnée n'est stockée sur ce site.</p>
+    </header>
+
+    <section class="section">
+      <form class="institution-form card-3d" id="rdv-form" novalidate>
+        <div class="form-group">
+          <label for="rdv-nom">Nom complet <span aria-hidden="true">*</span></label>
+          <input type="text" id="rdv-nom" name="rdv-nom" required maxlength="80" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="rdv-telephone">Téléphone (WhatsApp) <span aria-hidden="true">*</span></label>
+          <input type="tel" id="rdv-telephone" name="rdv-telephone" required maxlength="30" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="rdv-email">E-mail (facultatif)</label>
+          <input type="email" id="rdv-email" name="rdv-email" maxlength="80" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="rdv-service">Service concerné <span aria-hidden="true">*</span></label>
+          <select id="rdv-service" name="rdv-service" required>
+            <option value="">— Sélectionner —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rdv-date">Date souhaitée (facultatif)</label>
+          <input type="date" id="rdv-date" name="rdv-date">
+        </div>
+        <div class="form-group">
+          <label for="rdv-message">Motif ou message <span aria-hidden="true">*</span></label>
+          <textarea id="rdv-message" name="rdv-message" required maxlength="800" rows="5"></textarea>
+        </div>
+        <p class="form-help" id="rdv-help">En validant, vous ouvrirez WhatsApp avec un message prérempli. L'envoi reste sous votre contrôle.</p>
+        <button type="submit" class="btn btn-primary" id="rdv-submit">Envoyer ma demande via WhatsApp</button>
+        <p class="rdv-feedback" id="rdv-feedback" hidden role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="footer-slot"></div>
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Changer de thème"><span class="theme-toggle-icon" aria-hidden="true">☾</span></button>
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/rendez-vous.js"></script>
+</body>
+</html>

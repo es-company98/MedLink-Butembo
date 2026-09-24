@@ -23,7 +23,11 @@ const renderAboutCards = () => {
     h2.textContent = h.nom;
     const loc = document.createElement('p');
     loc.textContent = h.localisation;
+    const desc = document.createElement('p');
+    desc.className = 'about-card-desc';
+    desc.textContent = h.description || '';
     const badge = document.createElement('p');
+    badge.className = 'about-card-badge';
     badge.textContent = h.badge;
     const ul = document.createElement('ul');
     ul.className = 'hospital-specialites';
@@ -34,6 +38,7 @@ const renderAboutCards = () => {
     });
     body.appendChild(h2);
     body.appendChild(loc);
+    if (h.description) body.appendChild(desc);
     body.appendChild(badge);
     body.appendChild(ul);
     card.appendChild(body);

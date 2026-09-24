@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+  <meta name="referrer" content="no-referrer">
+  <title>Équipe médicale — HGR Katwa</title>
+  <meta name="description" content="Annuaire et profils de l'équipe médicale et des responsables de service au HGR Katwa, Butembo.">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+</head>
+<body data-page="equipe">
+  <div id="nav-slot"></div>
+
+  <main id="main-content">
+    <header class="page-header">
+      <h1 id="equipe-title">Équipe médicale</h1>
+      <p id="equipe-intro">Responsables de service et direction clinique du HGR Katwa — coordination des soins à Butembo.</p>
+    </header>
+
+    <section class="section" id="equipe-section">
+      <div class="institution-grid institution-grid--team" id="equipe-grid"></div>
+    </section>
+  </main>
+
+  <div id="footer-slot"></div>
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Changer de thème"><span class="theme-toggle-icon" aria-hidden="true">☾</span></button>
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/equipe.js"></script>
+</body>
+</html>
