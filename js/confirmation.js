@@ -1,5 +1,6 @@
 import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage, clearMedlinkData, isTriageComplete, getConsultationModeLabel } from './storage.js';
 import { assignDefaultHospital } from './hospitals.js';
+import { getDefaultHospital } from './hospitals-data.js';
 
 const dossierEl = () => document.getElementById('dossier-id-display');
 const whatsappBtn = () => document.getElementById('whatsapp-transmit-btn');
@@ -22,6 +23,12 @@ const CONSULTATION_MODE_CHOICES = [
 ];
 
 let selectedMode = '';
+
+const resolveWhatsAppTarget = (data) => {
+  const digits = String(data?.whatsapp_target || '').replace(/\D/g, '');
+  if (digits.length >= 10) return digits;
+  return String(getDefaultHospital().whatsapp_target || '').replace(/\D/g, '');
+};
 
 const renderSummary = (data) => {
   const el = summaryEl();
@@ -100,6 +107,13 @@ const renderModeOptions = (data) => {
 
 const initConfirmation = () => {
   let data = assignDefaultHospital();
+  if (!data.mode_consultation) {
+    data = saveMedlinkData({ mode_consultation: 'sms' });
+  }
+  const waTarget = resolveWhatsAppTarget(data);
+  if (waTarget && waTarget !== data.whatsapp_target) {
+    data = saveMedlinkData({ whatsapp_target: waTarget });
+  }
   if (!data.hospital_id || !isTriageComplete(data)) {
     window.location.href = './triage.html';
     return;
@@ -128,13 +142,16 @@ const initConfirmation = () => {
   renderSummary(data);
 
   const btn = whatsappBtn();
-  if (btn && data.whatsapp_target) {
+  if (btn) {
     btn.addEventListener('click', () => {
       if (!selectedMode) return;
       const latest = getMedlinkData();
+      const target = resolveWhatsAppTarget(latest);
+      if (!target) return;
       const message = buildWhatsAppMessage(latest);
-      const url = `https://wa.me/${latest.whatsapp_target}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
+      const url = `https://wa.me/${target}?text=${encodeURIComponent(message)}`;
+      const opened = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!opened) window.location.assign(url);
       const newBtn = newConsultBtn();
       if (newBtn) newBtn.hidden = false;
     });

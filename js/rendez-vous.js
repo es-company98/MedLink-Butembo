@@ -1,4 +1,4 @@
-import { CLINICAL_SERVICES, INSTITUTION } from './hgr-katwa-data.js';
+import { CLINICAL_SERVICES, INSTITUTION, getServiceById } from './hgr-katwa-data.js';
 
 const form = () => document.getElementById('rdv-form');
 const feedback = () => document.getElementById('rdv-feedback');
@@ -6,6 +6,37 @@ const feedback = () => document.getElementById('rdv-feedback');
 const sanitizeField = (value, max = 200) => {
   if (typeof value !== 'string') return '';
   return value.trim().slice(0, max);
+};
+
+const parsePreselectedServiceId = () => {
+  try {
+    const raw = new URLSearchParams(window.location.search).get('service');
+    if (!raw || typeof raw !== 'string') return '';
+    const id = raw.trim().slice(0, 50);
+    const service = getServiceById(id);
+    if (!service || service.teleconsultation) return '';
+    return service.service_id;
+  } catch {
+    return '';
+  }
+};
+
+const applyPreselectedService = (serviceId) => {
+  if (!serviceId) return;
+  const service = getServiceById(serviceId);
+  if (!service) return;
+
+  const select = document.getElementById('rdv-service');
+  if (!select) return;
+
+  select.value = service.name;
+  if (select.value !== service.name) return;
+
+  const intro = document.getElementById('rdv-intro');
+  if (intro) {
+    intro.textContent =
+      `Service présélectionné : ${service.name}. Complétez le formulaire ci-dessous. Votre demande sera préparée pour envoi via WhatsApp à l'équipe du HGR Katwa — aucune donnée n'est stockée sur ce site.`;
+  }
 };
 
 const populateServiceSelect = () => {
@@ -57,6 +88,7 @@ const showFeedback = (message, isError) => {
 
 const initRdvForm = () => {
   populateServiceSelect();
+  applyPreselectedService(parsePreselectedServiceId());
 
   form()?.addEventListener('submit', (event) => {
     event.preventDefault();

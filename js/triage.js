@@ -350,6 +350,9 @@ const renderStep = () => {
 const saveTriage = () => {
   const hospital = getDefaultHospital();
   saveMedlinkData({
+    hospital_id: hospital.hospital_id,
+    hopital_choisi: hospital.nom,
+    quartier: hospital.quartier,
     categorie: selectedCategory?.label || '',
     symptomes: [...selectedSymptoms],
     urgence: selectedUrgency?.label || '',
@@ -362,25 +365,16 @@ const saveTriage = () => {
 };
 
 const redirectAfterTriage = () => {
-  assignDefaultHospital();
   window.location.href = './consultation.html';
 };
 
-const resetTriageSelections = () => {
+const resetTriageUiState = () => {
   selectedCategory = null;
   selectedDoctor = null;
   selectedSymptoms = [];
   selectedUrgency = null;
   currentStep = 0;
   minStep = 0;
-  saveMedlinkData({
-    categorie: '',
-    symptomes: [],
-    urgence: '',
-    medecin_id: '',
-    medecin_nom: '',
-    medecin_specialite: ''
-  });
 };
 
 const initTriage = () => {
@@ -396,7 +390,7 @@ const initTriage = () => {
   const hospital = getDefaultHospital();
   document.documentElement.style.setProperty('--partner-accent', hospital.accent);
   hospitalLocked = true;
-  resetTriageSelections();
+  resetTriageUiState();
   renderHospitalBanner(hospitalContext);
   renderMotifBanner(null);
 

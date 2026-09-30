@@ -1,5 +1,5 @@
 import { HOSPITALS, getDefaultHospital } from './hospitals-data.js';
-import { saveMedlinkData, isTriageComplete } from './storage.js';
+import { saveMedlinkData, isTriageComplete, getMedlinkData } from './storage.js';
 import { createImageWithFallback, createImageFallback } from './ui.js';
 
 const grid = () => document.getElementById('hospitals-grid');

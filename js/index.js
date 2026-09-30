@@ -11,6 +11,7 @@ import {
   PRACTICAL_INFO
 } from './hgr-katwa-data.js';
 import { APP_RDV_HREF } from './app-config.js';
+import { createServiceCard } from './service-card.js';
 
 const renderMarquee = () => {
   const track = document.getElementById('marquee-track');
@@ -36,23 +37,9 @@ const renderServicePreview = () => {
   const fragment = document.createDocumentFragment();
 
   preview.forEach((service) => {
-    const article = document.createElement('article');
-    article.className = 'institution-card';
-
-    const badge = document.createElement('span');
-    badge.className = 'institution-badge';
-    badge.textContent = service.icon_label;
-
-    const h3 = document.createElement('h3');
-    h3.textContent = service.name;
-
-    const p = document.createElement('p');
-    p.textContent = service.summary;
-
-    article.appendChild(badge);
-    article.appendChild(h3);
-    article.appendChild(p);
-    fragment.appendChild(article);
+    fragment.appendChild(
+      createServiceCard(service, { showRdvLink: false, headingLevel: 3 })
+    );
   });
 
   container.replaceChildren(fragment);

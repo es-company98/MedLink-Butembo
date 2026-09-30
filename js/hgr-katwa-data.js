@@ -132,7 +132,7 @@ export const CLINICAL_SERVICES = [
     service_id: 'orientation-distance',
     name: 'Orientation médicale à distance',
     summary: 'Service complémentaire : pré-orientation confidentielle avant votre venue à l\'hôpital (phase pilote).',
-    icon_label: 'Option',
+    icon_label: 'À distance',
     teleconsultation: true,
     teleconsultation_href: './triage.html'
   }
@@ -221,6 +221,15 @@ export const B2B_PARTNERS = {
 
 export const getServiceById = (id) =>
   CLINICAL_SERVICES.find((s) => s.service_id === id) || null;
+
+/** Lien formulaire RDV avec service clinique présélectionné (hors téléconsultation). */
+export const getRdvHrefForService = (serviceId) => {
+  const service = getServiceById(serviceId);
+  if (!service || service.teleconsultation) {
+    return './rendez-vous.html';
+  }
+  return `./rendez-vous.html?service=${encodeURIComponent(service.service_id)}`;
+};
 
 export const HOME_PILLARS = [
   {
