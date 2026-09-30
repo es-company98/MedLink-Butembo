@@ -1,3 +1,5 @@
+import { HGR_KATWA_IMAGES, HGR_KATWA_IMAGE_ALT } from './hgr-katwa-data.js';
+
 export const DEFAULT_HOSPITAL_ID = 'hgr-katwa';
 
 export const HOSPITALS = [
@@ -18,8 +20,8 @@ export const HOSPITALS = [
     badge: 'Institution publique historique — Maternité & Urgences 24/7',
     temps_attente: 'Variable selon service',
     accent: '#1e4a6e',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1080&h=600&fit=crop',
-    image_alt: 'Hôpital Général de Référence de Katwa — Butembo, Nord-Kivu'
+    image: HGR_KATWA_IMAGES.campus,
+    image_alt: HGR_KATWA_IMAGE_ALT
   }
 ];
 

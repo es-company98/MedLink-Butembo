@@ -1,0 +1,26 @@
+{
+  "name": "HGR Katwa - Butembo",
+  "short_name": "HGR Katwa",
+  "description": "Orientation medicale et services cliniques HGR Katwa.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f9fb",
+  "theme_color": "#1e4a6e",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "./assets/images/hgr-katwa-hero.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/images/hgr-katwa-campus.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

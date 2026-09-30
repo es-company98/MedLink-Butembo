@@ -7,28 +7,28 @@ export const DEFAULT_DOCTOR_WHATSAPP = '243840344307';
 
 export const DOCTORS = [
   {
-    doctor_id: 'dr-gracia-nzanzu',
-    nom: 'Dr. Gracia Nzanzu',
-    titre: 'Médecin Directeur',
-    specialite: 'Médecine générale',
+    doctor_id: 'direction-medicale',
+    nom: 'Dr Papy Mafuta Kanyuki',
+    titre: 'Médecin directeur',
+    specialite: 'Hôpital Général de Référence de Katwa',
     categories: ['general', 'intime', 'urgence'],
-    disponibilite: 'Disponible aujourd\'hui',
+    disponibilite: 'Médecin directeur — HGR Katwa',
     available: true,
     whatsapp_target: '243840344307',
-    photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop',
-    photo_alt: 'Dr. Gracia Nzanzu — Médecin Directeur, HGR Katwa'
+    photo: '',
+    photo_alt: 'Dr Papy Mafuta Kanyuki — Médecin directeur, HGR Katwa'
   },
   {
-    doctor_id: 'dr-emery-kavunga',
-    nom: 'Dr. Emery Kavunga',
+    doctor_id: 'medecine-generale',
+    nom: 'Médecine générale',
     titre: 'Médecin généraliste',
-    specialite: 'Médecine générale',
+    specialite: 'Consultations externes',
     categories: ['general', 'intime', 'urgence'],
     disponibilite: 'Disponible aujourd\'hui',
     available: true,
     whatsapp_target: '243840344307',
     photo: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&h=400&fit=crop',
-    photo_alt: 'Dr. Emery Kavunga — Médecin généraliste, HGR Katwa'
+    photo_alt: 'Médecine générale — HGR Katwa'
   },
   {
     doctor_id: 'dr-specialiste-pediatrie',

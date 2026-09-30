@@ -50,10 +50,7 @@ const renderRecap = (data) => {
 };
 
 const initConsultation = () => {
-  let data = getMedlinkData();
-  if (!data.hospital_id) {
-    data = assignDefaultHospital();
-  }
+  let data = assignDefaultHospital();
   if (!isTriageComplete(data)) {
     window.location.href = './triage.html';
     return;

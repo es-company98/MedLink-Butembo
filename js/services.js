@@ -29,7 +29,7 @@ const createServiceCard = (service) => {
     const link = document.createElement('a');
     link.href = service.teleconsultation_href;
     link.className = 'service-optional-link';
-    link.textContent = 'Accéder à l\'orientation à distance (optionnel)';
+    link.textContent = 'Accéder à l\'orientation à distance';
 
     article.appendChild(note);
     article.appendChild(link);

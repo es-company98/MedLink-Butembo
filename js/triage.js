@@ -1,13 +1,12 @@
 import { TRIAGE_CATEGORIES, URGENCY_LEVELS, getSymptomsForCategory } from './triage-questions.js';
 import { getDefaultHospital } from './hospitals-data.js';
-import { getDoctorsForCategory, getDoctorById } from './doctors-data.js';
+import { getDoctorsForCategory } from './doctors-data.js';
 import { createImageWithFallback, createImageFallback } from './ui.js';
 import {
   saveMedlinkData,
-  clearMedlinkData,
-  getMedlinkData,
-  isTriageComplete
+  getMedlinkData
 } from './storage.js';
+import { assignDefaultHospital } from './hospitals.js';
 
 const STEPS = ['category', 'symptoms', 'urgency', 'doctor', 'confirm'];
 
@@ -50,7 +49,7 @@ const renderHospitalBanner = (data) => {
   }
   banner.hidden = false;
   const p = document.createElement('p');
-  p.textContent = `Structure déjà choisie : ${data.hopital_choisi}${data.quartier ? ` — ${data.quartier}` : ''}. Complétez le triage ci-dessous.`;
+  p.textContent = `Établissement : ${data.hopital_choisi}${data.quartier ? ` — ${data.quartier}` : ''}. Complétez le triage ci-dessous.`;
   banner.appendChild(p);
 };
 
@@ -124,6 +123,7 @@ const createDoctorCard = (doctor, isSelected, onSelect) => {
   const img = createImageWithFallback(doctor.photo, doctor.photo_alt, 120, 120, 'doctor-card-image');
   const fallback = createImageFallback(doctor.nom);
   fallback.classList.add('doctor-card-fallback');
+  if (!doctor.photo) fallback.hidden = false;
   photoWrap.appendChild(img);
   photoWrap.appendChild(fallback);
   btn.appendChild(photoWrap);
@@ -361,28 +361,26 @@ const saveTriage = () => {
   });
 };
 
-const ensureDefaultHospital = () => {
-  const hospital = getDefaultHospital();
-  const current = getMedlinkData();
-  document.documentElement.style.setProperty('--partner-accent', hospital.accent);
-  return saveMedlinkData({
-    hospital_id: hospital.hospital_id,
-    hopital_choisi: hospital.nom,
-    quartier: hospital.quartier,
-    whatsapp_target: current.whatsapp_target || hospital.whatsapp_target
-  });
-};
-
 const redirectAfterTriage = () => {
-  ensureDefaultHospital();
+  assignDefaultHospital();
   window.location.href = './consultation.html';
 };
 
-const getFirstIncompleteStep = () => {
-  if (selectedSymptoms.length === 0) return 1;
-  if (!selectedUrgency) return 2;
-  if (!selectedDoctor) return 3;
-  return 4;
+const resetTriageSelections = () => {
+  selectedCategory = null;
+  selectedDoctor = null;
+  selectedSymptoms = [];
+  selectedUrgency = null;
+  currentStep = 0;
+  minStep = 0;
+  saveMedlinkData({
+    categorie: '',
+    symptomes: [],
+    urgence: '',
+    medecin_id: '',
+    medecin_nom: '',
+    medecin_specialite: ''
+  });
 };
 
 const initTriage = () => {
@@ -394,54 +392,13 @@ const initTriage = () => {
     return;
   }
 
-  const existing = getMedlinkData();
-  hospitalLocked = Boolean(existing.hospital_id);
-
-  if (hospitalLocked) {
-    renderHospitalBanner(existing);
-    selectedCategory = TRIAGE_CATEGORIES.find((c) => c.label === existing.categorie) || null;
-    selectedDoctor = getDoctorById(existing.medecin_id);
-    selectedSymptoms = existing.symptomes?.length ? [...existing.symptomes] : [];
-    selectedUrgency = URGENCY_LEVELS.find((u) => u.label === existing.urgence) || null;
-
-    if (isTriageComplete(existing)) {
-      window.location.href = './consultation.html';
-      return;
-    }
-
-    if (selectedCategory) {
-      renderMotifBanner(selectedCategory.label);
-      minStep = 1;
-      currentStep = getFirstIncompleteStep();
-    } else {
-      renderMotifBanner(null);
-      currentStep = 0;
-      minStep = 0;
-    }
-  } else {
-    renderHospitalBanner({});
-    const preselected = TRIAGE_CATEGORIES.find((c) => c.label === existing.categorie);
-    clearMedlinkData();
-    selectedSymptoms = [];
-    selectedUrgency = null;
-    selectedDoctor = null;
-
-    if (preselected) {
-      selectedCategory = preselected;
-      minStep = 1;
-      currentStep = 1;
-      renderMotifBanner(preselected.label);
-      saveMedlinkData({
-        categorie: preselected.label,
-        date: new Date().toISOString()
-      });
-    } else {
-      selectedCategory = null;
-      currentStep = 0;
-      minStep = 0;
-      renderMotifBanner(null);
-    }
-  }
+  const hospitalContext = assignDefaultHospital();
+  const hospital = getDefaultHospital();
+  document.documentElement.style.setProperty('--partner-accent', hospital.accent);
+  hospitalLocked = true;
+  resetTriageSelections();
+  renderHospitalBanner(hospitalContext);
+  renderMotifBanner(null);
 
   prevBtn().addEventListener('click', () => {
     if (currentStep > minStep) {

@@ -11,7 +11,9 @@ export const assignDefaultHospital = () => {
     hospital_id: hospital.hospital_id,
     hopital_choisi: hospital.nom,
     quartier: hospital.quartier,
-    whatsapp_target: current.whatsapp_target || hospital.whatsapp_target
+    whatsapp_target: current.medecin_id
+      ? current.whatsapp_target || hospital.whatsapp_target
+      : hospital.whatsapp_target
   });
 };
 

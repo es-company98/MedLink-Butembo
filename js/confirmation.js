@@ -1,4 +1,5 @@
 import { getMedlinkData, saveMedlinkData, generateDossierId, buildWhatsAppMessage, clearMedlinkData, isTriageComplete, getConsultationModeLabel } from './storage.js';
+import { assignDefaultHospital } from './hospitals.js';
 
 const dossierEl = () => document.getElementById('dossier-id-display');
 const whatsappBtn = () => document.getElementById('whatsapp-transmit-btn');
@@ -98,7 +99,7 @@ const renderModeOptions = (data) => {
 };
 
 const initConfirmation = () => {
-  let data = getMedlinkData();
+  let data = assignDefaultHospital();
   if (!data.hospital_id || !isTriageComplete(data)) {
     window.location.href = './triage.html';
     return;

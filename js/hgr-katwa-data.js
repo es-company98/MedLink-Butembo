@@ -1,5 +1,16 @@
 /** Données institutionnelles — HGR Katwa (Butembo, Nord-Kivu). */
 
+/** Visuels locaux — placer les fichiers dans ./assets/images/ */
+export const HGR_KATWA_IMAGES = {
+  hero: './assets/images/hgr-katwa-hero.jpg',
+  anchorage: './assets/images/hgr-katwa-anchorage.jpg',
+  presentation: './assets/images/hgr-katwa-presentation.jpg',
+  campus: './assets/images/hgr-katwa-campus.jpg'
+};
+
+export const HGR_KATWA_IMAGE_ALT =
+  'Hôpital Général de Référence de Katwa — Butembo, Nord-Kivu';
+
 export const INSTITUTION = {
   official_name: 'Hôpital Général de Référence de Katwa',
   short_name: 'HGR Katwa',
@@ -120,7 +131,7 @@ export const CLINICAL_SERVICES = [
   {
     service_id: 'orientation-distance',
     name: 'Orientation médicale à distance',
-    summary: 'Service complémentaire optionnel : pré-orientation confidentielle avant votre venue à l\'hôpital (phase pilote).',
+    summary: 'Service complémentaire : pré-orientation confidentielle avant votre venue à l\'hôpital (phase pilote).',
     icon_label: 'Option',
     teleconsultation: true,
     teleconsultation_href: './triage.html'
@@ -130,10 +141,10 @@ export const CLINICAL_SERVICES = [
 export const MEDICAL_TEAM = [
   {
     member_id: 'direction-medicale',
-    name: 'Direction médicale',
+    name: 'Dr Papy Mafuta Kanyuki',
     role: 'Médecin directeur',
     department: 'Direction & gouvernance clinique',
-    bio: 'Coordination des services, qualité des soins et liaison avec les autorités sanitaires provinciales.'
+    bio: 'Médecin directeur de l\'Hôpital Général de Référence de Katwa.'
   },
   {
     member_id: 'chef-urgences',
